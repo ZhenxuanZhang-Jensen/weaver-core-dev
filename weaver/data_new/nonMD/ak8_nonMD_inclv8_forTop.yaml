@@ -27,8 +27,11 @@ new_variables:
     # attention: add new fj_label_noH for the new labels
     # fj_lable_noH is for the case when we don't have Higgs in the sample to skip the Higgs labels
     # the new lable list(with Higgs) is ['Top_bWcs', 'Top_bWqq', 'Top_bWc', 'Top_bWs', 'Top_bWq', 'Top_bWev', 'Top_bWmv', 'Top_bWtauev', 'Top_bWtaumv', 'Top_bWtauhv', 'Top_Wcs', 'Top_Wqq', 'Top_Wev', 'Top_Wmv', 'Top_Wtauev', 'Top_Wtaumv', 'Top_Wtauhv','H_bb', 'H_cc', 'H_ss', 'H_qq', 'H_bc', 'H_bs', 'H_cs', 'H_gg', 'H_ee', 'H_mm', 'H_tauhtaue', 'H_tauhtaum', 'H_tauhtauh', 'W_cs', 'W_qq', 'W_ev', 'W_mv', 'W_tauev', 'W_taumv', 'W_tauhv', 'Z_bb', 'Z_cc', 'Z_ss', 'Z_qq', 'QCD_bb', 'QCD_cc', 'QCD_b', 'QCD_c', 'QCD_others']
+    fj_label_modified_QCD : ak.where(fj_label>=309, fj_label-281, fj_label)
+    # since old QCD label is from 309 to 314, we need to change it to 28-32
     # label len is 46, 0-45, Higgs related index start from 17, Higgs related index end at 29, total 13 Higgs related labels
-    fj_label_noH = ak.where(fj_label>=29, fj_label-13, fj_label)
+    fj_label_noH : ak.where(fj_label_modified_QCD>=29, fj_label_modified_QCD-13, fj_label_modified_QCD)
+    
     # after removing Higgs related labels, the label len is 33, 0-32
     label_Top_bWcs: (fj_label_noH == 0)
     label_Top_bWqq: (fj_label_noH == 1)
