@@ -7,8 +7,8 @@
 selection: >-
     (jet_tightId==1) & (jet_no<2) & (fj_pt>200) & (fj_pt<2500) & (fj_sdmass>=20) & (fj_sdmass<260) &
     (
-      ((fj_label_noH >= 28) & (fj_label_noH < 33) & (sample_isQCD==1)) |
-      ((fj_label_noH < 28) & (sample_isQCD==0))
+      ( (fj_label_noH >= 28) & (fj_label_noH < 33) & (sample_isQCD==1) & (event_no%7!=0) )|
+      ( (fj_label_noH < 28) & (sample_isQCD==0)  & (event_no%7!=0) )
     )
 
 ### selection to apply at test time (i.e., when running w/ --predict)
@@ -220,15 +220,13 @@ inputs:
 
 labels:
     ### type can be `simple`, `custom`, 'hybrid'
-    type: hybrid
+    type: simple
     value: null
     # attention: add new label index for the new labels
     value_cls_index: fj_label_noH  # just input the label index
     # attention: add new label classes
     value_cls_names: ['Top_bWcs', 'Top_bWqq', 'Top_bWc', 'Top_bWs', 'Top_bWq', 'Top_bWev', 'Top_bWmv', 'Top_bWtauev', 'Top_bWtaumv', 'Top_bWtauhv', 'Top_Wcs', 'Top_Wqq', 'Top_Wev', 'Top_Wmv', 'Top_Wtauev', 'Top_Wtaumv', 'Top_Wtauhv', 'W_cs', 'W_qq', 'W_ev', 'W_mv', 'W_tauev', 'W_taumv', 'W_tauhv', 'Z_bb', 'Z_cc', 'Z_ss', 'Z_qq', 'QCD_bb', 'QCD_cc', 'QCD_b', 'QCD_c', 'QCD_others']
     value_custom:
-        target_res_mass_factor: np.where(fj_isQCD, fj_genjet_sdmass, fj_gen_mass) / fj_mass
-        target_parts_mass_factor: np.where(fj_isQCD, fj_genjet_nomu_sdmass, fj_genparts_mass) / fj_mass
 
 observers:
     - event_no
