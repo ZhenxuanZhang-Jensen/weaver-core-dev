@@ -171,7 +171,7 @@ class _SimpleIter(object):
                 self.load_range = (offset, offset + interval)
             else:
                 self.load_range = (start_pos, start_pos + interval)
-
+        
         _logger.debug(
             'Init iter [%d], will load %d (out of %d*%s=%d) files with load_range=%s:\n%s', 0
             if self.worker_info is None else self.worker_info.id, len(self.filelist),

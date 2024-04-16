@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python: Train Weaver",
+        "type": "python",
+        "request": "launch",
+        "program": "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/train.py",
+        "console": "integratedTerminal",
+        "python": "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/bin/python",
+        "cwd": "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver",
+        "args": [
+          "--train-mode", "hybrid", "-o", "three_coll", "True", "-o", "loss_gamma", "5", "-o", "fc_params", "[(512,0.1)]", "-o", "embed_dims", "[64,256,64]", "-o", "pair_embed_dims", "[32,32,32]", "--use-amp", 
+          "--data-train", "/scratchfs/cms/licq/deepjetak8/20230504_ak8_UL17_v8/BulkGravitonToHHTo4QGluLTau_MX-600to6000_MH-15to250/*.root",
+          "--data-config", "data_new/inclv7plus/ak8_MD_inclv8_part_addlosttrk_manual.yaml", 
+        "--network-config", "networks/example_ParticleTransformer2023Tagger_hybrid.py", 
+        "--model-prefix", "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/model/TEST/net", 
+        "--num-workers", "1", "--batch-size", "512", "--samples-per-epoch", "5120", "--samples-per-epoch-val", "5120", "--num-epochs", "1", "--gpus", "", "--start-lr", "5e-3", "--optimizer", "ranger", 
+        "--data-test", "qcd:/scratchfs/cms/licq/deepjetak8/20230504_ak8_UL17_v8/infer/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065360-100.root",
+        "--predict-output", "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/predict/pred.root" , "--in-memory"
+      ]
+      }
+    ]
+  }

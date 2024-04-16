@@ -76,6 +76,7 @@ def p3_norm(p, eps=1e-8):
 
 
 def pairwise_lv_fts(xi, xj, num_outputs=4, eps=1e-8, for_onnx=False):
+    # to compute the pairwise features
     pti, rapi, phii = to_ptrapphim(xi, False, eps=None, for_onnx=for_onnx).split((1, 1, 1), dim=1)
     ptj, rapj, phij = to_ptrapphim(xj, False, eps=None, for_onnx=for_onnx).split((1, 1, 1), dim=1)
 
@@ -183,7 +184,14 @@ def trunc_normal_(tensor, mean=0., std=1., a=-2., b=2.):
 
 
 class SequenceTrimmer(nn.Module):
-
+    '''
+    attributes:
+        enabled: bool -> to enable/disable the trimming
+        target: tuple (min, max) -> to set the target quantile range
+        _counter: int -> to count the number of forward calls
+    methods:
+        forward: to trim the sequence length
+    '''
     def __init__(self, enabled=False, target=(0.9, 1.02), **kwargs) -> None:
         super().__init__(**kwargs)
         self.enabled = enabled
@@ -538,6 +546,7 @@ class ParticleTransformer(nn.Module):
 
         # init
         self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim), requires_grad=True)
+        
         trunc_normal_(self.cls_token, std=.02)
 
     @torch.jit.ignore
@@ -566,10 +575,12 @@ class ParticleTransformer(nn.Module):
                 attn_mask = self.pair_embed(v, uu).view(-1, v.size(-1), v.size(-1))  # (N*num_heads, P, P)
 
             # transform
+            
             for block in self.blocks:
                 x = block(x, x_cls=None, padding_mask=padding_mask, attn_mask=attn_mask)
 
             # extract class token
+            
             cls_tokens = self.cls_token.expand(1, x.size(1), -1)  # (1, N, C)
             for block in self.cls_blocks:
                 cls_tokens = block(x, x_cls=cls_tokens, padding_mask=padding_mask)
@@ -699,7 +710,9 @@ class ParticleTransformerTagger_3coll(nn.Module):
         super().__init__(**kwargs)
 
         self.use_amp = use_amp
-
+        #  firstly do the trimmer
+        # why: to trim the input data to the same length
+        # how: use the mask to trim the data
         self.cpf_trimmer = SequenceTrimmer(enabled=trim and not for_inference)
         self.npf_trimmer = SequenceTrimmer(enabled=trim and not for_inference)
         self.sv_trimmer = SequenceTrimmer(enabled=trim and not for_inference)
@@ -740,6 +753,7 @@ class ParticleTransformerTagger_3coll(nn.Module):
         # mask: (N, 1, P) -- real particle = 1, padded = 0
 
         with torch.no_grad():
+            # only null running, target to trim all the input features to be the right length
             cpf_x, cpf_v, cpf_mask, _ = self.cpf_trimmer(cpf_x, cpf_v, cpf_mask)
             npf_x, npf_v, npf_mask, _ = self.npf_trimmer(npf_x, npf_v, npf_mask)
             sv_x, sv_v, sv_mask, _ = self.sv_trimmer(sv_x, sv_v, sv_mask)

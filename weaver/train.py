@@ -135,6 +135,7 @@ parser.add_argument('--backend', type=str, choices=['gloo', 'nccl', 'mpi'], defa
 def to_filelist(args, mode='train'):
     if mode == 'train':
         flist = args.data_train
+        print('flist', flist)
     elif mode == 'val':
         flist = args.data_val
     else:
@@ -239,9 +240,11 @@ def train_load(args):
                                  infinity_mode=args.steps_per_epoch_val is not None,
                                  in_memory=args.in_memory,
                                  name='val' + ('' if args.local_rank is None else '_rank%d' % args.local_rank))
-    train_loader = DataLoader(train_data, batch_size=args.batch_size, drop_last=True, pin_memory=True,
-                              num_workers=min(args.num_workers, int(len(train_files) * args.file_fraction)),
-                              persistent_workers=args.num_workers > 0 and args.steps_per_epoch is not None)
+
+    print("args.num_workers", args.num_workers)
+    print("args.steps_per_epoch", args.steps_per_epoch)
+    print("len(train_files)", len(train_files))
+    train_loader = DataLoader(train_data, batch_size=args.batch_size, drop_last=True, pin_memory=True,num_workers=min(args.num_workers, int(len(train_files) * args.file_fraction)),persistent_workers=args.num_workers > 0 and args.steps_per_epoch is not None)
     val_loader = DataLoader(val_data, batch_size=args.batch_size, drop_last=True, pin_memory=True,
                             num_workers=min(args.num_workers, int(len(val_files) * args.file_fraction)),
                             persistent_workers=args.num_workers > 0 and args.steps_per_epoch_val is not None)
@@ -864,6 +867,7 @@ def _main(args):
 
 
 def main():
+    
     args = parser.parse_args()
 
     if args.samples_per_epoch is not None:
