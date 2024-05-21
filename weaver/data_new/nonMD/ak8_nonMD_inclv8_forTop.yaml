@@ -25,11 +25,16 @@ new_variables:
     ### can use functions from `math`, `np` (numpy), and `ak` in the expression
     # attention: add new fj_label_noH for the new labels
     # fj_lable_noH is for the case when we don't have Higgs in the sample to skip the Higgs labels
-    # the new lable list(with Higgs) is ['Top_bWcs', 'Top_bWqq', 'Top_bWc', 'Top_bWs', 'Top_bWq', 'Top_bWev', 'Top_bWmv', 'Top_bWtauev', 'Top_bWtaumv', 'Top_bWtauhv', 'Top_Wcs', 'Top_Wqq', 'Top_Wev', 'Top_Wmv', 'Top_Wtauev', 'Top_Wtaumv', 'Top_Wtauhv','H_bb', 'H_cc', 'H_ss', 'H_qq', 'H_bc', 'H_bs', 'H_cs', 'H_gg', 'H_ee', 'H_mm', 'H_tauhtaue', 'H_tauhtaum', 'H_tauhtauh', 'W_cs', 'W_qq', 'W_ev', 'W_mv', 'W_tauev', 'W_taumv', 'W_tauhv', 'Z_bb', 'Z_cc', 'Z_ss', 'Z_qq', 'QCD_bb', 'QCD_cc', 'QCD_b', 'QCD_c', 'QCD_others']
-    fj_label_modified_QCD: ak.where(fj_label>=309, fj_label-281, fj_label)
+    # the new lable list(with Higgs) is ['Top_bWcs', 'Top_bWqq', 'Top_bWc', 'Top_bWs', 'Top_bWq', 'Top_bWev', 'Top_bWmv', 'Top_bWtauev', 'Top_bWtaumv', 'Top_bWtauhv', 'Top_Wcs', 'Top_Wqq', 'Top_Wev', 'Top_Wmv', 'Top_Wtauev', 'Top_Wtaumv', 'Top_Wtauhv','H_bb', 'H_cc', 'H_ss', 'H_qq', 'H_bc', 'H_bs', 'H_cs', 'H_gg', 'H_ee', 'H_mm', 'H_tauhtaue', 'H_tauhtaum', 'H_tauhtauh', 'W_cs', 'W_qq', 'W_ev', 'W_mv', 'W_tauev', 'W_taumv', 'W_tauhv', 'Z_bb', 'Z_cc', 'Z_ss', 'Z_qq', 'QCD_bb', 'QCD_cc', 'QCD_b', 'QCD_c', 'QCD_others'] len is 46
+    # 46 - 13 = 33, so the new label list(without Higgs) is ['Top_bWcs', 'Top_bWqq', 'Top_bWc', 'Top_bWs', 'Top_bWq', 'Top_bWev', 'Top_bWmv', 'Top_bWtauev', 'Top_bWtaumv', 'Top_bWtauhv', 'Top_Wcs', 'Top_Wqq', 'Top_Wev', 'Top_Wmv', 'Top_Wtauev', 'Top_Wtaumv', 'Top_Wtauhv', 'W_cs', 'W_qq', 'W_ev', 'W_mv', 'W_tauev', 'W_taumv', 'W_tauhv', 'Z_bb', 'Z_cc', 'Z_ss', 'Z_qq', 'QCD_bb', 'QCD_cc', 'QCD_b', 'QCD_c', 'QCD_others'] len is 33
+    # 309 - 281 = 28
+    fj_label_modified_QCD: ak.where(fj_label>=309, fj_label-281+13, fj_label)
     # since old QCD label is from 309 to 314, we need to change it to 28-32
+    # since w semi-leptonice label is absent in the new label list, we need to remove
+    fj_label_modified_WSL: ak.where(fj_label_modified_QCD>=12, fj_label_modified_QCD-5, fj_label_modified_QCD)
     # label len is 46, 0-45, Higgs related index start from 17, Higgs related index end at 29, total 13 Higgs related labels
-    fj_label_noH: ak.where(fj_label_modified_QCD>=29, fj_label_modified_QCD-13, fj_label_modified_QCD)
+    # so final label is 33, 0-32
+    fj_label_noH: ak.where(fj_label_modified_WSL>=17, fj_label_modified_WSL-13, fj_label_modified_WSL)
     
     # after removing Higgs related labels, the label len is 33, 0-32
     label_Top_bWcs: (fj_label_noH == 0)
@@ -44,27 +49,22 @@ new_variables:
     label_Top_bWtauhv: (fj_label_noH == 9)
     label_Top_Wcs: (fj_label_noH == 10)
     label_Top_Wqq: (fj_label_noH == 11)
-    label_Top_Wev: (fj_label_noH == 12)
-    label_Top_Wmv: (fj_label_noH == 13)
-    label_Top_Wtauev: (fj_label_noH == 14)
-    label_Top_Wtaumv: (fj_label_noH == 15)
-    label_Top_Wtauhv: (fj_label_noH == 16)
-    label_W_cs: (fj_label_noH == 17)
-    label_W_qq: (fj_label_noH == 18)
-    label_W_ev: (fj_label_noH == 19)
-    label_W_mv: (fj_label_noH == 20)
-    label_W_tauev: (fj_label_noH == 21)
-    label_W_taumv: (fj_label_noH == 22)
-    label_W_tauhv: (fj_label_noH == 23)
-    label_Z_bb: (fj_label_noH == 24)
-    label_Z_cc: (fj_label_noH == 25)
-    label_Z_ss: (fj_label_noH == 26)
-    label_Z_qq: (fj_label_noH == 27)
-    label_QCD_bb: (fj_label_noH == 28)
-    label_QCD_cc: (fj_label_noH == 29)
-    label_QCD_b: (fj_label_noH == 30)
-    label_QCD_c: (fj_label_noH == 31)
-    label_QCD_others: (fj_label_noH == 32)
+    label_W_cs: (fj_label_noH == 12)
+    label_W_qq: (fj_label_noH == 13)
+    label_W_ev: (fj_label_noH == 14)
+    label_W_mv: (fj_label_noH == 15)
+    label_W_tauev: (fj_label_noH == 16)
+    label_W_taumv: (fj_label_noH == 17)
+    label_W_tauhv: (fj_label_noH == 18)
+    label_Z_bb: (fj_label_noH == 19)
+    label_Z_cc: (fj_label_noH == 20)
+    label_Z_ss: (fj_label_noH == 21)
+    label_Z_qq: (fj_label_noH == 22)
+    label_QCD_bb: (fj_label_noH == 23)
+    label_QCD_cc: (fj_label_noH == 24)
+    label_QCD_b: (fj_label_noH == 25)
+    label_QCD_c: (fj_label_noH == 26)
+    label_QCD_others: (fj_label_noH == 27)
     # ordered by pt
     cpfcandlt_index: ak.argsort(cpfcandlt_pt_nopuppi, axis=-1, ascending=False)
     cpfcandlt_pt_log_nopuppi_sort: cpfcandlt_pt_log_nopuppi[cpfcandlt_index]
@@ -227,7 +227,7 @@ labels:
     # attention: add new label index for the new labels
     value_cls_index: fj_label_noH  # just input the label index
     # attention: add new label classes
-    value_cls_names: ['Top_bWcs', 'Top_bWqq', 'Top_bWc', 'Top_bWs', 'Top_bWq', 'Top_bWev', 'Top_bWmv', 'Top_bWtauev', 'Top_bWtaumv', 'Top_bWtauhv', 'Top_Wcs', 'Top_Wqq', 'Top_Wev', 'Top_Wmv', 'Top_Wtauev', 'Top_Wtaumv', 'Top_Wtauhv', 'W_cs', 'W_qq', 'W_ev', 'W_mv', 'W_tauev', 'W_taumv', 'W_tauhv', 'Z_bb', 'Z_cc', 'Z_ss', 'Z_qq', 'QCD_bb', 'QCD_cc', 'QCD_b', 'QCD_c', 'QCD_others']
+    value_cls_names: ['Top_bWcs', 'Top_bWqq', 'Top_bWc', 'Top_bWs', 'Top_bWq', 'Top_bWev', 'Top_bWmv', 'Top_bWtauev', 'Top_bWtaumv', 'Top_bWtauhv', 'Top_Wcs', 'Top_Wqq', 'Top_Wev', 'Top_Wmv', 'Top_Wtauev', 'Top_Wtaumv', 'Top_Wtauhv', 'W_cs', 'W_qq', 'Z_bb', 'Z_cc', 'Z_ss', 'Z_qq', 'QCD_bb', 'QCD_cc', 'QCD_b', 'QCD_c', 'QCD_others']
     value_custom:
 
 observers:
