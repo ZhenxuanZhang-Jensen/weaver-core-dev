@@ -1,5 +1,4 @@
-#! /bin/bash
-  
+#! /bin/bash  
 ######## Part 1 #########
 # Script parameters     #
 #########################
@@ -9,7 +8,7 @@
 #SBATCH --job-name=Conda_env
 #SBATCH --cpus-per-task=10
 #SBATCH --tasks=1
-#SBATCH --mem-per-cpu=20G
+#SBATCH --mem-per-cpu=8G
 #SBATCH --gpus=v100:3
 #SBATCH --output=//hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver_%u_%x_%j.out
 
@@ -32,7 +31,7 @@ conda activate ML_env
 
 # conda activate HHWWGG
 # python test.py
-sh run_train_nonMD_TOP_gpus.sh > output_train_nonMD_TOP_gpus_20epochs_testWSLyaml.out 2>&1
+sh run_train_nonMD_TOP_distributedGPU.sh > output_train_nonMD_TOP_TOP_distributedGPU_30epochs.out 2>&1
 # python GirdSearch_investment.py
 echo "End job on " `date`
 

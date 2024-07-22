@@ -28,13 +28,14 @@ new_variables:
     # the new lable list(with Higgs) is ['Top_bWcs', 'Top_bWqq', 'Top_bWc', 'Top_bWs', 'Top_bWq', 'Top_bWev', 'Top_bWmv', 'Top_bWtauev', 'Top_bWtaumv', 'Top_bWtauhv', 'Top_Wcs', 'Top_Wqq', 'Top_Wev', 'Top_Wmv', 'Top_Wtauev', 'Top_Wtaumv', 'Top_Wtauhv','H_bb', 'H_cc', 'H_ss', 'H_qq', 'H_bc', 'H_bs', 'H_cs', 'H_gg', 'H_ee', 'H_mm', 'H_tauhtaue', 'H_tauhtaum', 'H_tauhtauh', 'W_cs', 'W_qq', 'W_ev', 'W_mv', 'W_tauev', 'W_taumv', 'W_tauhv', 'Z_bb', 'Z_cc', 'Z_ss', 'Z_qq', 'QCD_bb', 'QCD_cc', 'QCD_b', 'QCD_c', 'QCD_others'] len is 46
     # 46 - 13 = 33, so the new label list(without Higgs) is ['Top_bWcs', 'Top_bWqq', 'Top_bWc', 'Top_bWs', 'Top_bWq', 'Top_bWev', 'Top_bWmv', 'Top_bWtauev', 'Top_bWtaumv', 'Top_bWtauhv', 'Top_Wcs', 'Top_Wqq', 'Top_Wev', 'Top_Wmv', 'Top_Wtauev', 'Top_Wtaumv', 'Top_Wtauhv', 'W_cs', 'W_qq', 'W_ev', 'W_mv', 'W_tauev', 'W_taumv', 'W_tauhv', 'Z_bb', 'Z_cc', 'Z_ss', 'Z_qq', 'QCD_bb', 'QCD_cc', 'QCD_b', 'QCD_c', 'QCD_others'] len is 33
     # 309 - 281 = 28
-    fj_label_modified_QCD: ak.where(fj_label>=309, fj_label-281+13, fj_label)
-    # since old QCD label is from 309 to 314, we need to change it to 28-32
-    # since w semi-leptonice label is absent in the new label list, we need to remove
-    fj_label_modified_WSL: ak.where(fj_label_modified_QCD>=12, fj_label_modified_QCD-5, fj_label_modified_QCD)
-    # label len is 46, 0-45, Higgs related index start from 17, Higgs related index end at 29, total 13 Higgs related labels
-    # so final label is 33, 0-32
-    fj_label_noH: ak.where(fj_label_modified_WSL>=17, fj_label_modified_WSL-13, fj_label_modified_WSL)
+    # Z: bb,cc,ss,qq label: 37,38,39,40 -> 19,20,21,22
+    # ttbar label: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+    # QCD label: 309, 310, 311, 312, 313 -> 23,24,25,26,27
+    # W: cs,qq label: 30, 31 -> 17,18
+    fj_label_modified_QCD: ak.where(fj_label>=309, fj_label-286, fj_label)
+    fj_label_modified_WSL: ak.where(fj_label_modified_QCD>=30, fj_label_modified_QCD-13, fj_label_modified_QCD)
+    fj_label_noH: ak.where(fj_label_modified_WSL>=37, fj_label_modified_WSL-18, fj_label_modified_WSL)
+    
     
     # after removing Higgs related labels, the label len is 33, 0-32
     label_Top_bWcs: (fj_label_noH == 0)
@@ -49,17 +50,22 @@ new_variables:
     label_Top_bWtauhv: (fj_label_noH == 9)
     label_Top_Wcs: (fj_label_noH == 10)
     label_Top_Wqq: (fj_label_noH == 11)
-    label_W_cs: (fj_label_noH == 12)
-    label_W_qq: (fj_label_noH == 13)
-    label_Z_bb: (fj_label_noH == 14)
-    label_Z_cc: (fj_label_noH == 15)
-    label_Z_ss: (fj_label_noH == 16)
-    label_Z_qq: (fj_label_noH == 17)
-    label_QCD_bb: (fj_label_noH == 18)
-    label_QCD_cc: (fj_label_noH == 19)
-    label_QCD_b: (fj_label_noH == 20)
-    label_QCD_c: (fj_label_noH == 21)
-    label_QCD_others: (fj_label_noH == 22)
+    label_Top_Wev: (fj_label_noH == 12)
+    label_Top_Wmv: (fj_label_noH == 13)
+    label_Top_Wtauev: (fj_label_noH == 14)
+    label_Top_Wtaumv: (fj_label_noH == 15)
+    label_Top_Wtauhv: (fj_label_noH == 16)
+    label_W_cs: (fj_label_noH == 17)
+    label_W_qq: (fj_label_noH == 18)
+    label_Z_bb: (fj_label_noH == 19)
+    label_Z_cc: (fj_label_noH == 20)
+    label_Z_ss: (fj_label_noH == 21)
+    label_Z_qq: (fj_label_noH == 22)
+    label_QCD_bb: (fj_label_noH == 23)
+    label_QCD_cc: (fj_label_noH == 24)
+    label_QCD_b: (fj_label_noH == 25)
+    label_QCD_c: (fj_label_noH == 26)
+    label_QCD_others: (fj_label_noH == 27)
     # ordered by pt
     cpfcandlt_index: ak.argsort(cpfcandlt_pt_nopuppi, axis=-1, ascending=False)
     cpfcandlt_pt_log_nopuppi_sort: cpfcandlt_pt_log_nopuppi[cpfcandlt_index]
