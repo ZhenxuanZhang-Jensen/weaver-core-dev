@@ -1,0 +1,228 @@
+[2024-07-22 16:35:25,735] INFO: args:
+ - ('train_mode', 'cls')
+ - ('data_config', '/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/data_new/nonMD/ak8_nonMD_inclv8_forTop_GloParT.yaml')
+ - ('data_train', ['/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/*.root'])
+ - ('data_val', [])
+ - ('data_test', ['qcd:/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/infer/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/*.root', 'ttbar:/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/infer/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/*.root'])
+ - ('data_fraction', 1)
+ - ('file_fraction', 1)
+ - ('fetch_by_files', False)
+ - ('fetch_step', 0.01)
+ - ('in_memory', False)
+ - ('train_val_split', 0.8)
+ - ('demo', False)
+ - ('lr_finder', None)
+ - ('tensorboard', '_ak8_finetune_stage2_topVsQCD_manual.aux256-256')
+ - ('tensorboard_custom_fn', None)
+ - ('network_config', '/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/networks/finetune_stage2/mlp.py')
+ - ('network_option', [['ft_layer_params', '1'], ['aux_layer_params', '[(256,0),(256,0)]']])
+ - ('model_prefix', '/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/model/ak8_finetune_stage2_topVsQCD_manual.aux256-256/net')
+ - ('load_model_weights', None)
+ - ('num_epochs', 1)
+ - ('steps_per_epoch', 500)
+ - ('steps_per_epoch_val', 500)
+ - ('samples_per_epoch', 256000)
+ - ('samples_per_epoch_val', 256000)
+ - ('optimizer', 'ranger')
+ - ('optimizer_option', [])
+ - ('lr_scheduler', 'one-cycle')
+ - ('warmup_steps', 0)
+ - ('load_epoch', None)
+ - ('start_lr', 0.02)
+ - ('batch_size', 512)
+ - ('use_amp', False)
+ - ('compile_model', False)
+ - ('gpus', '1')
+ - ('predict_gpus', '1')
+ - ('num_workers', 10)
+ - ('predict', False)
+ - ('predict_output', '/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/predict/ak8_finetune_stage2_topVsQCD_manual.aux256-256/pred.root')
+ - ('export_onnx', None)
+ - ('io_test', False)
+ - ('copy_inputs', False)
+ - ('log_file', '/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/logs/ak8_finetune_stage2_topVsQCD_manual.aux256-256/train.log')
+ - ('print', False)
+ - ('profile', False)
+ - ('backend', None)
+ - ('local_rank', None)
+[2024-07-22 16:35:25,736] INFO: Running in classification mode
+flist ['/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/*.root']
+[2024-07-22 16:35:27,133] INFO: Using 622 files for training, range: (0, 0.8)
+[2024-07-22 16:35:27,133] INFO: Using 622 files for validation, range: (0.8, 1)
+[2024-07-22 16:35:27,135] INFO: Found file /hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/data_new/nonMD/ak8_nonMD_inclv8_forTop_GloParT.f5682a17e83fd89555c4072fd86511ff.auto.yaml w/ auto-generated preprocessing information, will use that instead!
+[2024-07-22 16:35:27,160] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': None, 'params': None}[0m
+[2024-07-22 16:35:27,160] INFO: [0;37mselection: (jet_tightId==1) & (jet_no<2) & (fj_pt>200) & (fj_pt<2500) & (fj_sdmass>=20) & (fj_sdmass<260) & (
+  ( (fj_label >= 309) & (fj_label < 314) & (sample_isQCD==1) & (event_no%7!=0) ) |
+  ( (fj_label <= 45) & (sample_isQCD==0)  & (event_no%7!=0) )
+)[0m
+[2024-07-22 16:35:27,160] INFO: [0;37mtest_time_selection: (jet_tightId==1) & (jet_no<2) & (
+  ((sample_isQCD==1) & (event_no%28==0)) |
+  ((sample_isQCD==0) & (event_no%7==0))
+)[0m
+[2024-07-22 16:35:27,160] INFO: [0;37mvar_funcs:
+ - ('fj_label_modified_QCD', 'ak.where(fj_label>=309, fj_label-286, fj_label)')
+ - ('fj_label_modified_WSL', 'ak.where(fj_label_modified_QCD>=30, fj_label_modified_QCD-13, fj_label_modified_QCD)')
+ - ('fj_label_noH', 'ak.where(fj_label_modified_WSL>=37, fj_label_modified_WSL-18, fj_label_modified_WSL)')
+ - ('fj_pt_log', 'np.log(fj_pt)')
+ - ('fj_sdmass_log', 'np.log(np.maximum(fj_sdmass, 1e-8))')
+ - ('_label_', 'fj_label_noH')
+ - ('_labelcheck_', 'ak.ones_like(fj_label_noH)')[0m
+[2024-07-22 16:35:27,160] INFO: [0;37minput_names: ('ft_vars', 'aux_vars')[0m
+[2024-07-22 16:35:27,160] INFO: [0;37minput_dicts:
+ - ('ft_vars', ['jet_custom_discs'])
+ - ('aux_vars', ['fj_pt_log', 'fj_sdmass_log'])[0m
+[2024-07-22 16:35:27,160] INFO: [0;37minput_shapes:
+ - ('ft_vars', (-1, 1, 256))
+ - ('aux_vars', (-1, 2))[0m
+[2024-07-22 16:35:27,160] INFO: [0;37mpreprocess_params:
+ - ('jet_custom_discs', {'length': 256, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_pt_log', {'length': None, 'pad_mode': 'constant', 'center': 7.0, 'scale': 2.0, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_sdmass_log', {'length': None, 'pad_mode': 'constant', 'center': 4.0, 'scale': 0.5, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2024-07-22 16:35:27,160] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2024-07-22 16:35:27,160] INFO: [0;37mobserver_names: ('event_no', 'fj_label', 'fj_pt', 'fj_eta', 'fj_phi', 'fj_mass', 'fj_sdmass', 'fj_sdmass_fromsubjets', 'fj_gen_mass', 'fj_genparts_mass', 'fj_genjet_sdmass', 'fj_genjet_nomu_sdmass', 'sample_isQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XbbvsQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XccvsQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XqqvsQCD', 'pfMassDecorrelatedParticleNetJetTags_probQCDb', 'pfMassDecorrelatedParticleNetJetTags_probQCDbb', 'pfMassDecorrelatedParticleNetJetTags_probQCDc', 'pfMassDecorrelatedParticleNetJetTags_probQCDcc', 'pfMassDecorrelatedParticleNetJetTags_probQCDothers', 'pfMassDecorrelatedParticleNetJetTags_probXbb', 'pfMassDecorrelatedParticleNetJetTags_probXcc', 'pfMassDecorrelatedParticleNetJetTags_probXqq', 'pfParticleNetDiscriminatorsJetTags_H4qvsQCD', 'pfParticleNetDiscriminatorsJetTags_HbbvsQCD', 'pfParticleNetDiscriminatorsJetTags_HccvsQCD', 'pfParticleNetDiscriminatorsJetTags_TvsQCD', 'pfParticleNetDiscriminatorsJetTags_WvsQCD', 'pfParticleNetDiscriminatorsJetTags_ZbbvsQCD', 'pfParticleNetDiscriminatorsJetTags_ZvsQCD', 'pfParticleNetJetTags_probHbb', 'pfParticleNetJetTags_probHcc', 'pfParticleNetJetTags_probHqqqq', 'pfParticleNetJetTags_probQCDb', 'pfParticleNetJetTags_probQCDbb', 'pfParticleNetJetTags_probQCDc', 'pfParticleNetJetTags_probQCDcc', 'pfParticleNetJetTags_probQCDothers', 'pfParticleNetJetTags_probTbc', 'pfParticleNetJetTags_probTbcq', 'pfParticleNetJetTags_probTbel', 'pfParticleNetJetTags_probTbmu', 'pfParticleNetJetTags_probTbq', 'pfParticleNetJetTags_probTbqq', 'pfParticleNetJetTags_probTbta', 'pfParticleNetJetTags_probWcq', 'pfParticleNetJetTags_probWqq', 'pfParticleNetJetTags_probZbb', 'pfParticleNetJetTags_probZcc', 'pfParticleNetJetTags_probZqq')[0m
+[2024-07-22 16:35:27,161] INFO: [0;37mmonitor_variables: ()[0m
+[2024-07-22 16:35:27,161] INFO: [0;37mreweight_method: flat[0m
+[2024-07-22 16:35:27,161] INFO: [0;37mreweight_basewgt: None[0m
+[2024-07-22 16:35:27,161] INFO: [0;37mreweight_branches: ('fj_pt', 'fj_sdmass')[0m
+[2024-07-22 16:35:27,161] INFO: [0;37mreweight_bins: ([200, 251, 316, 398, 501, 630, 793, 997, 1255, 1579, 1987, 2500], [-10000, 10000])[0m
+[2024-07-22 16:35:27,161] INFO: [0;37mreweight_classes: ('fj_isQCD', 'fj_isTop')[0m
+[2024-07-22 16:35:27,161] INFO: [0;37mclass_weights: [1, 1][0m
+[2024-07-22 16:35:27,161] INFO: [0;37mreweight_threshold: 10[0m
+[2024-07-22 16:35:27,161] INFO: [0;37mreweight_discard_under_overflow: True[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': None, 'params': None}[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mselection: (jet_tightId==1) & (jet_no<2) & (fj_pt>200) & (fj_pt<2500) & (fj_sdmass>=20) & (fj_sdmass<260) & (
+  ( (fj_label >= 309) & (fj_label < 314) & (sample_isQCD==1) & (event_no%7!=0) ) |
+  ( (fj_label <= 45) & (sample_isQCD==0)  & (event_no%7!=0) )
+)[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mtest_time_selection: (jet_tightId==1) & (jet_no<2) & (
+  ((sample_isQCD==1) & (event_no%28==0)) |
+  ((sample_isQCD==0) & (event_no%7==0))
+)[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mvar_funcs:
+ - ('fj_label_modified_QCD', 'ak.where(fj_label>=309, fj_label-286, fj_label)')
+ - ('fj_label_modified_WSL', 'ak.where(fj_label_modified_QCD>=30, fj_label_modified_QCD-13, fj_label_modified_QCD)')
+ - ('fj_label_noH', 'ak.where(fj_label_modified_WSL>=37, fj_label_modified_WSL-18, fj_label_modified_WSL)')
+ - ('fj_pt_log', 'np.log(fj_pt)')
+ - ('fj_sdmass_log', 'np.log(np.maximum(fj_sdmass, 1e-8))')
+ - ('_label_', 'fj_label_noH')
+ - ('_labelcheck_', 'ak.ones_like(fj_label_noH)')[0m
+[2024-07-22 16:35:27,174] INFO: [0;37minput_names: ('ft_vars', 'aux_vars')[0m
+[2024-07-22 16:35:27,174] INFO: [0;37minput_dicts:
+ - ('ft_vars', ['jet_custom_discs'])
+ - ('aux_vars', ['fj_pt_log', 'fj_sdmass_log'])[0m
+[2024-07-22 16:35:27,174] INFO: [0;37minput_shapes:
+ - ('ft_vars', (-1, 1, 256))
+ - ('aux_vars', (-1, 2))[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mpreprocess_params:
+ - ('jet_custom_discs', {'length': 256, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_pt_log', {'length': None, 'pad_mode': 'constant', 'center': 7.0, 'scale': 2.0, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_sdmass_log', {'length': None, 'pad_mode': 'constant', 'center': 4.0, 'scale': 0.5, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mobserver_names: ()[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mmonitor_variables: ()[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mreweight_method: flat[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mreweight_basewgt: None[0m
+[2024-07-22 16:35:27,174] INFO: [0;37mreweight_branches: ('fj_pt', 'fj_sdmass')[0m
+[2024-07-22 16:35:27,175] INFO: [0;37mreweight_bins: ([200, 251, 316, 398, 501, 630, 793, 997, 1255, 1579, 1987, 2500], [-10000, 10000])[0m
+[2024-07-22 16:35:27,175] INFO: [0;37mreweight_classes: ('fj_isQCD', 'fj_isTop')[0m
+[2024-07-22 16:35:27,175] INFO: [0;37mclass_weights: [1, 1][0m
+[2024-07-22 16:35:27,175] INFO: [0;37mreweight_threshold: 10[0m
+[2024-07-22 16:35:27,175] INFO: [0;37mreweight_discard_under_overflow: True[0m
+[2024-07-22 16:35:27,177] INFO: Found file /hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/data_new/nonMD/ak8_nonMD_inclv8_forTop_GloParT.f5682a17e83fd89555c4072fd86511ff.auto.yaml w/ auto-generated preprocessing information, will use that instead!
+[2024-07-22 16:35:27,202] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': None, 'params': None}[0m
+[2024-07-22 16:35:27,202] INFO: [0;37mselection: (jet_tightId==1) & (jet_no<2) & (fj_pt>200) & (fj_pt<2500) & (fj_sdmass>=20) & (fj_sdmass<260) & (
+  ( (fj_label >= 309) & (fj_label < 314) & (sample_isQCD==1) & (event_no%7!=0) ) |
+  ( (fj_label <= 45) & (sample_isQCD==0)  & (event_no%7!=0) )
+)[0m
+[2024-07-22 16:35:27,202] INFO: [0;37mtest_time_selection: (jet_tightId==1) & (jet_no<2) & (
+  ((sample_isQCD==1) & (event_no%28==0)) |
+  ((sample_isQCD==0) & (event_no%7==0))
+)[0m
+[2024-07-22 16:35:27,202] INFO: [0;37mvar_funcs:
+ - ('fj_label_modified_QCD', 'ak.where(fj_label>=309, fj_label-286, fj_label)')
+ - ('fj_label_modified_WSL', 'ak.where(fj_label_modified_QCD>=30, fj_label_modified_QCD-13, fj_label_modified_QCD)')
+ - ('fj_label_noH', 'ak.where(fj_label_modified_WSL>=37, fj_label_modified_WSL-18, fj_label_modified_WSL)')
+ - ('fj_pt_log', 'np.log(fj_pt)')
+ - ('fj_sdmass_log', 'np.log(np.maximum(fj_sdmass, 1e-8))')
+ - ('_label_', 'fj_label_noH')
+ - ('_labelcheck_', 'ak.ones_like(fj_label_noH)')[0m
+[2024-07-22 16:35:27,202] INFO: [0;37minput_names: ('ft_vars', 'aux_vars')[0m
+[2024-07-22 16:35:27,202] INFO: [0;37minput_dicts:
+ - ('ft_vars', ['jet_custom_discs'])
+ - ('aux_vars', ['fj_pt_log', 'fj_sdmass_log'])[0m
+[2024-07-22 16:35:27,202] INFO: [0;37minput_shapes:
+ - ('ft_vars', (-1, 1, 256))
+ - ('aux_vars', (-1, 2))[0m
+[2024-07-22 16:35:27,202] INFO: [0;37mpreprocess_params:
+ - ('jet_custom_discs', {'length': 256, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_pt_log', {'length': None, 'pad_mode': 'constant', 'center': 7.0, 'scale': 2.0, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_sdmass_log', {'length': None, 'pad_mode': 'constant', 'center': 4.0, 'scale': 0.5, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2024-07-22 16:35:27,202] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2024-07-22 16:35:27,202] INFO: [0;37mobserver_names: ('event_no', 'fj_label', 'fj_pt', 'fj_eta', 'fj_phi', 'fj_mass', 'fj_sdmass', 'fj_sdmass_fromsubjets', 'fj_gen_mass', 'fj_genparts_mass', 'fj_genjet_sdmass', 'fj_genjet_nomu_sdmass', 'sample_isQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XbbvsQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XccvsQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XqqvsQCD', 'pfMassDecorrelatedParticleNetJetTags_probQCDb', 'pfMassDecorrelatedParticleNetJetTags_probQCDbb', 'pfMassDecorrelatedParticleNetJetTags_probQCDc', 'pfMassDecorrelatedParticleNetJetTags_probQCDcc', 'pfMassDecorrelatedParticleNetJetTags_probQCDothers', 'pfMassDecorrelatedParticleNetJetTags_probXbb', 'pfMassDecorrelatedParticleNetJetTags_probXcc', 'pfMassDecorrelatedParticleNetJetTags_probXqq', 'pfParticleNetDiscriminatorsJetTags_H4qvsQCD', 'pfParticleNetDiscriminatorsJetTags_HbbvsQCD', 'pfParticleNetDiscriminatorsJetTags_HccvsQCD', 'pfParticleNetDiscriminatorsJetTags_TvsQCD', 'pfParticleNetDiscriminatorsJetTags_WvsQCD', 'pfParticleNetDiscriminatorsJetTags_ZbbvsQCD', 'pfParticleNetDiscriminatorsJetTags_ZvsQCD', 'pfParticleNetJetTags_probHbb', 'pfParticleNetJetTags_probHcc', 'pfParticleNetJetTags_probHqqqq', 'pfParticleNetJetTags_probQCDb', 'pfParticleNetJetTags_probQCDbb', 'pfParticleNetJetTags_probQCDc', 'pfParticleNetJetTags_probQCDcc', 'pfParticleNetJetTags_probQCDothers', 'pfParticleNetJetTags_probTbc', 'pfParticleNetJetTags_probTbcq', 'pfParticleNetJetTags_probTbel', 'pfParticleNetJetTags_probTbmu', 'pfParticleNetJetTags_probTbq', 'pfParticleNetJetTags_probTbqq', 'pfParticleNetJetTags_probTbta', 'pfParticleNetJetTags_probWcq', 'pfParticleNetJetTags_probWqq', 'pfParticleNetJetTags_probZbb', 'pfParticleNetJetTags_probZcc', 'pfParticleNetJetTags_probZqq')[0m
+[2024-07-22 16:35:27,202] INFO: [0;37mmonitor_variables: ()[0m
+[2024-07-22 16:35:27,202] INFO: [0;37mreweight_method: flat[0m
+[2024-07-22 16:35:27,202] INFO: [0;37mreweight_basewgt: None[0m
+[2024-07-22 16:35:27,203] INFO: [0;37mreweight_branches: ('fj_pt', 'fj_sdmass')[0m
+[2024-07-22 16:35:27,203] INFO: [0;37mreweight_bins: ([200, 251, 316, 398, 501, 630, 793, 997, 1255, 1579, 1987, 2500], [-10000, 10000])[0m
+[2024-07-22 16:35:27,203] INFO: [0;37mreweight_classes: ('fj_isQCD', 'fj_isTop')[0m
+[2024-07-22 16:35:27,203] INFO: [0;37mclass_weights: [1, 1][0m
+[2024-07-22 16:35:27,203] INFO: [0;37mreweight_threshold: 10[0m
+[2024-07-22 16:35:27,203] INFO: [0;37mreweight_discard_under_overflow: True[0m
+[2024-07-22 16:35:27,216] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': None, 'params': None}[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mselection: (jet_tightId==1) & (jet_no<2) & (fj_pt>200) & (fj_pt<2500) & (fj_sdmass>=20) & (fj_sdmass<260) & (
+  ( (fj_label >= 309) & (fj_label < 314) & (sample_isQCD==1) & (event_no%7!=0) ) |
+  ( (fj_label <= 45) & (sample_isQCD==0)  & (event_no%7!=0) )
+)[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mtest_time_selection: (jet_tightId==1) & (jet_no<2) & (
+  ((sample_isQCD==1) & (event_no%28==0)) |
+  ((sample_isQCD==0) & (event_no%7==0))
+)[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mvar_funcs:
+ - ('fj_label_modified_QCD', 'ak.where(fj_label>=309, fj_label-286, fj_label)')
+ - ('fj_label_modified_WSL', 'ak.where(fj_label_modified_QCD>=30, fj_label_modified_QCD-13, fj_label_modified_QCD)')
+ - ('fj_label_noH', 'ak.where(fj_label_modified_WSL>=37, fj_label_modified_WSL-18, fj_label_modified_WSL)')
+ - ('fj_pt_log', 'np.log(fj_pt)')
+ - ('fj_sdmass_log', 'np.log(np.maximum(fj_sdmass, 1e-8))')
+ - ('_label_', 'fj_label_noH')
+ - ('_labelcheck_', 'ak.ones_like(fj_label_noH)')[0m
+[2024-07-22 16:35:27,217] INFO: [0;37minput_names: ('ft_vars', 'aux_vars')[0m
+[2024-07-22 16:35:27,217] INFO: [0;37minput_dicts:
+ - ('ft_vars', ['jet_custom_discs'])
+ - ('aux_vars', ['fj_pt_log', 'fj_sdmass_log'])[0m
+[2024-07-22 16:35:27,217] INFO: [0;37minput_shapes:
+ - ('ft_vars', (-1, 1, 256))
+ - ('aux_vars', (-1, 2))[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mpreprocess_params:
+ - ('jet_custom_discs', {'length': 256, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_pt_log', {'length': None, 'pad_mode': 'constant', 'center': 7.0, 'scale': 2.0, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_sdmass_log', {'length': None, 'pad_mode': 'constant', 'center': 4.0, 'scale': 0.5, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mobserver_names: ()[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mmonitor_variables: ()[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mreweight_method: flat[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mreweight_basewgt: None[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mreweight_branches: ('fj_pt', 'fj_sdmass')[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mreweight_bins: ([200, 251, 316, 398, 501, 630, 793, 997, 1255, 1579, 1987, 2500], [-10000, 10000])[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mreweight_classes: ('fj_isQCD', 'fj_isTop')[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mclass_weights: [1, 1][0m
+[2024-07-22 16:35:27,217] INFO: [0;37mreweight_threshold: 10[0m
+[2024-07-22 16:35:27,217] INFO: [0;37mreweight_discard_under_overflow: True[0m
+args.num_workers 10
+args.steps_per_epoch 500
+len(train_files) 622
+[2024-07-22 16:35:27,220] INFO: Network options: {'ft_layer_params': 1, 'aux_layer_params': [(256, 0), (256, 0)]}
+{'ft_layer_params': 1, 'aux_layer_params': [(256, 0), (256, 0)]}
+Traceback (most recent call last):
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/train.py", line 923, in <module>
+    main()
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/train.py", line 919, in main
+    _main(args)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/train.py", line 721, in _main
+    model, model_info, loss_func = model_setup(args, data_config)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/train.py", line 552, in model_setup
+    model, model_info = network_module.get_model(data_config, **network_options)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/networks/finetune_stage2/mlp.py", line 137, in get_model
+    model = MultiLayerPerceptron(ft_dims, aux_dims, num_classes, **cfg)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/networks/finetune_stage2/mlp.py", line 66, in __init__
+    for out_dim, drop_rate, *args in ft_layer_params:
+TypeError: 'int' object is not iterable
