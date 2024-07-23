@@ -18,8 +18,24 @@ from utils.import_tools import import_module
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--train-mode', type=str, default='cls',
-                    choices=['cls', 'regression', 'hybrid'],
+                    choices=['cls', 'regression', 'hybrid', 'custom'],
                     help='training mode')
+parser.add_argument('--train-mode-params', type=str, default='',
+                    choices=['', 'metric:loss'],
+                    help='training mode parameters')
+parser.add_argument('--run-mode', type=str, default='default',
+                    choices=['default', 'train-only', 'val-only'],
+                    help='training mode')
+parser.add_argument('--early-stop', action='store_true', default=False,
+                    help='Early stop training if the validation metric does not improve for a few epochs')
+parser.add_argument('--early-stop-dlr', type=float, default=5e-4,
+                    help='The delta loss for early stopping')
+parser.add_argument('--use-last-model', action='store_true', default=False,
+                    help='Simply take the last model as the best model')
+parser.add_argument('--extra-selection', type=str, default=None,
+                    help='Additional selection requirement, will modify `selection` to `(selection) & (extra)` on-the-fly')
+parser.add_argument('--seed', type=int, default=-1,
+                    help='Set seed for all torch, numpy utilities for reproducibility')
 parser.add_argument('-c', '--data-config', type=str, default='data/ak15_points_pf_sv_v0.yaml',
                     help='data config YAML file')
 parser.add_argument('-i', '--data-train', nargs='*', default=[],
@@ -50,6 +66,8 @@ parser.add_argument('--in-memory', action='store_true', default=False,
                     help='load the whole dataset (and perform the preprocessing) only once and keep it in memory for the entire run')
 parser.add_argument('--train-val-split', type=float, default=0.8,
                     help='training/validation split fraction')
+parser.add_argument('--test-range', type=float, nargs=2, default=[0, 1],
+                    help='test dataset range')
 parser.add_argument('--demo', action='store_true', default=False,
                     help='quickly test the setup by running over only a small number of events')
 parser.add_argument('--lr-finder', type=str, default=None,
@@ -86,12 +104,12 @@ parser.add_argument('--samples-per-epoch', type=int, default=None,
 parser.add_argument('--samples-per-epoch-val', type=int, default=None,
                     help='number of samples per epochs for validation; '
                          'if neither of `--steps-per-epoch-val` or `--samples-per-epoch-val` is set, each epoch will run over all loaded samples')
-parser.add_argument('--optimizer', type=str, default='ranger', choices=['adam', 'adamW', 'radam', 'ranger'],  # TODO: add more
+parser.add_argument('--optimizer', type=str, default='ranger', choices=['adam', 'adamW', 'radam', 'ranger', 'sgd'],  # TODO: add more
                     help='optimizer for the training')
 parser.add_argument('--optimizer-option', nargs=2, action='append', default=[],
                     help='options to pass to the optimizer class constructor, e.g., `--optimizer-option weight_decay 1e-4`')
 parser.add_argument('--lr-scheduler', type=str, default='flat+decay',
-                    choices=['none', 'steps', 'flat+decay', 'flat+linear', 'flat+cos', 'one-cycle'],
+                    choices=['none', 'steps', 'flat+decay', 'flat+linear', 'flat+cos', 'one-cycle', 'cosanneal'],
                     help='learning rate scheduler')
 parser.add_argument('--warmup-steps', type=int, default=0,
                     help='number of warm-up steps, only valid for `flat+linear` and `flat+cos` lr schedulers')
@@ -135,7 +153,6 @@ parser.add_argument('--backend', type=str, choices=['gloo', 'nccl', 'mpi'], defa
 def to_filelist(args, mode='train'):
     if mode == 'train':
         flist = args.data_train
-        print('flist', flist)
     elif mode == 'val':
         flist = args.data_val
     else:
@@ -225,6 +242,7 @@ def train_load(args):
         raise RuntimeError('Must set --steps-per-epoch when using --in-memory!')
 
     train_data = SimpleIterDataset(train_file_dict, args.data_config, for_training=True,
+                                   extra_selection=args.extra_selection,
                                    load_range_and_fraction=(train_range, args.data_fraction),
                                    file_fraction=args.file_fraction,
                                    fetch_by_files=args.fetch_by_files,
@@ -233,6 +251,7 @@ def train_load(args):
                                    in_memory=args.in_memory,
                                    name='train' + ('' if args.local_rank is None else '_rank%d' % args.local_rank))
     val_data = SimpleIterDataset(val_file_dict, args.data_config, for_training=True,
+                                 extra_selection=args.extra_selection,
                                  load_range_and_fraction=(val_range, args.data_fraction),
                                  file_fraction=args.file_fraction,
                                  fetch_by_files=args.fetch_by_files,
@@ -240,11 +259,9 @@ def train_load(args):
                                  infinity_mode=args.steps_per_epoch_val is not None,
                                  in_memory=args.in_memory,
                                  name='val' + ('' if args.local_rank is None else '_rank%d' % args.local_rank))
-
-    print("args.num_workers", args.num_workers)
-    print("args.steps_per_epoch", args.steps_per_epoch)
-    print("len(train_files)", len(train_files))
-    train_loader = DataLoader(train_data, batch_size=args.batch_size, drop_last=True, pin_memory=True,num_workers=min(args.num_workers, int(len(train_files) * args.file_fraction)),persistent_workers=args.num_workers > 0 and args.steps_per_epoch is not None)
+    train_loader = DataLoader(train_data, batch_size=args.batch_size, drop_last=True, pin_memory=True,
+                              num_workers=min(args.num_workers, int(len(train_files) * args.file_fraction)),
+                              persistent_workers=args.num_workers > 0 and args.steps_per_epoch is not None)
     val_loader = DataLoader(val_data, batch_size=args.batch_size, drop_last=True, pin_memory=True,
                             num_workers=min(args.num_workers, int(len(val_files) * args.file_fraction)),
                             persistent_workers=args.num_workers > 0 and args.steps_per_epoch_val is not None)
@@ -294,7 +311,7 @@ def test_load(args):
         _logger.info('Running on test file group %s with %d files:\n...%s', name, len(filelist), '\n...'.join(filelist))
         num_workers = min(args.num_workers, len(filelist))
         test_data = SimpleIterDataset({name: filelist}, args.data_config, for_training=False,
-                                      load_range_and_fraction=((0, 1), args.data_fraction),
+                                      load_range_and_fraction=(tuple(args.test_range), args.data_fraction),
                                       fetch_by_files=True, fetch_step=1,
                                       name='test_' + name)
         test_loader = DataLoader(test_data, num_workers=num_workers, batch_size=args.batch_size, drop_last=False,
@@ -329,7 +346,7 @@ def onnx(args, model, data_config, model_info):
                       input_names=model_info['input_names'],
                       output_names=model_info['output_names'],
                       dynamic_axes=model_info.get('dynamic_axes', None),
-                      opset_version=11)
+                      opset_version=11) # 11 for 10_6, 14 for Run 3
     _logger.info('ONNX model saved to %s', args.export_onnx)
 
     preprocessing_json = os.path.join(os.path.dirname(args.export_onnx), 'preprocess.json')
@@ -455,6 +472,17 @@ def optim(args, model, device):
         _logger.info('Parameters excluded from weight decay:\n - %s', '\n - '.join(names_no_decay))
         if len(names_lr_mult):
             _logger.info('Parameters with lr multiplied by %s:\n - %s', mult_factor, '\n - '.join(names_lr_mult))
+    elif 'freeze' in optimizer_options:
+        pattern = optimizer_options.pop('freeze')
+        import re
+        for name, param in model.named_parameters():
+            if not param.requires_grad:
+                continue
+            if re.match(pattern, name):
+                param.requires_grad = False
+                _logger.info('Freeze parameter %s' % name)
+        parameters = filter(lambda p: p.requires_grad, model.parameters())
+
     else:
         parameters = model.parameters()
 
@@ -467,6 +495,8 @@ def optim(args, model, device):
         opt = torch.optim.AdamW(parameters, lr=args.start_lr, **optimizer_options)
     elif args.optimizer == 'radam':
         opt = torch.optim.RAdam(parameters, lr=args.start_lr, **optimizer_options)
+    elif args.optimizer == 'sgd':
+        opt = torch.optim.SGD(parameters, lr=args.start_lr, **optimizer_options)
 
     # load previous training and resume if `--load-epoch` is set
     if args.load_epoch is not None:
@@ -532,6 +562,12 @@ def optim(args, model, device):
                 opt, max_lr=args.start_lr, epochs=args.num_epochs, steps_per_epoch=args.steps_per_epoch, pct_start=0.3,
                 anneal_strategy='cos', div_factor=25.0, last_epoch=-1 if args.load_epoch is None else args.load_epoch)
             scheduler._update_per_step = True  # mark it to update the lr every step, instead of every epoch
+        elif args.lr_scheduler == 'cosanneal':
+            base_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(opt, 4, 2, verbose=False)
+            from utils.nn.scheduler.warmup import GradualWarmupScheduler
+            scheduler = GradualWarmupScheduler(opt, multiplier=1,
+                                                warmup_epoch=5,
+                                                after_scheduler=base_scheduler) ## warmup
     return opt, scheduler
 
 
@@ -558,6 +594,102 @@ def model_setup(args, data_config):
             state_dict = model.state_dict()
             state_dict['mlp.0.weight'].copy_(model_state['part.fc.0.weight'][-1:].data)
             state_dict['mlp.0.bias'].copy_(model_state['part.fc.0.bias'][-1:].data)
+        if args.load_model_weights == 'finetune_stage2_AD':
+            model_state = torch.load("/home/olympus/licq/hww/incl-train/weaver-core/weaver/model/ak8_MD_inclv8_part_addltphp_wmeasonly_manual.useamp.large.gm5.ddp-bs256-lr2e-3/net_best_epoch_state.pt", map_location='cpu')
+            state_dict = model.state_dict()
+            state_dict['ft_mlp.0.0.weight'].copy_(model_state['part.fc.0.0.weight'][-1:].data)
+            state_dict['ft_mlp.0.0.bias'].copy_(model_state['part.fc.0.0.bias'][-1:].data)
+        if args.load_model_weights.startswith('finetune_stage2.'):
+            model_state = torch.load("/home/olympus/licq/hww/incl-train/weaver-core/weaver/model/ak8_MD_inclv8_part_addltphp_wmeasonly_manual.useamp.large.gm5.ddp-bs256-lr2e-3/net_best_epoch_state.pt", map_location='cpu')
+            state_dict = model.state_dict()
+            if args.load_model_weights == 'finetune_stage2.0': # only takes the params 0-th layer after ft layer
+                state_dict[f'ft_mlp.0.0.weight'].copy_(model_state[f'part.fc.0.0.weight'].data)
+                state_dict[f'ft_mlp.0.0.bias'].copy_(model_state[f'part.fc.0.0.bias'].data)
+            elif args.load_model_weights == 'finetune_stage2.all': # take all layers after ft nodes 
+                state_dict[f'ft_mlp.0.0.weight'].copy_(model_state[f'part.fc.0.0.weight'].data)
+                state_dict[f'ft_mlp.0.0.bias'].copy_(model_state[f'part.fc.0.0.bias'].data)
+                state_dict[f'ft_mlp.1.0.weight'].copy_(model_state[f'part.fc.1.weight'].data)
+                state_dict[f'ft_mlp.1.0.bias'].copy_(model_state[f'part.fc.1.bias'].data)
+            elif args.load_model_weights == 'finetune_stage2.exactcopy.higgs+qcd':
+                state_dict[f'ft_mlp.0.0.weight'].copy_(model_state[f'part.fc.0.0.weight'].data)
+                state_dict[f'ft_mlp.0.0.bias'].copy_(model_state[f'part.fc.0.0.bias'].data)
+                state_dict[f'ft_mlp.1.weight'].copy_(model_state[f'part.fc.1.weight'].data[[17,18,19,20,21,22,23,24,25,26,27,28,29,309,310,311,312,313]])
+                state_dict[f'ft_mlp.1.bias'].copy_(model_state[f'part.fc.1.bias'].data[[17,18,19,20,21,22,23,24,25,26,27,28,29,309,310,311,312,313]])
+            elif args.load_model_weights == 'finetune_stage2.exactcopy.res_mass':
+                state_dict[f'ft_mlp.0.0.weight'].copy_(model_state[f'part.fc.0.0.weight'].data)
+                state_dict[f'ft_mlp.0.0.bias'].copy_(model_state[f'part.fc.0.0.bias'].data)
+                state_dict[f'ft_mlp.1.weight'].copy_(model_state[f'part.fc.1.weight'].data[[314]])
+                state_dict[f'ft_mlp.1.bias'].copy_(model_state[f'part.fc.1.bias'].data[[314]])
+        elif args.load_model_weights.startswith('finetune_pheno.'):
+            model_state = torch.load(os.path.expanduser("~/hww/incl-train/weaver-core/weaver/model/JetClassII_ak8puppi_full_scale/net_best_epoch_state.pt"), map_location='cpu')
+            state_dict = model.state_dict()
+            print(state_dict.keys())
+            if args.load_model_weights == 'finetune_pheno.all': # take all layers after ft nodes
+                state_dict[f'ft_mlp.0.0.weight'].copy_(model_state[f'mod.fc.0.0.weight'].data)
+                state_dict[f'ft_mlp.0.0.bias'].copy_(model_state[f'mod.fc.0.0.bias'].data)
+                state_dict[f'ft_mlp.1.0.weight'].copy_(model_state[f'mod.fc.1.weight'].data)
+                state_dict[f'ft_mlp.1.0.bias'].copy_(model_state[f'mod.fc.1.bias'].data)
+            elif args.load_model_weights == 'finetune_pheno.0': # only takes the params 0-th layer after ft layer
+                state_dict[f'ft_mlp.0.0.weight'].copy_(model_state[f'mod.fc.0.0.weight'].data)
+                state_dict[f'ft_mlp.0.0.bias'].copy_(model_state[f'mod.fc.0.0.bias'].data)
+            elif (args.load_model_weights.startswith('finetune_pheno.ensemble.0') or args.load_model_weights.startswith('finetune_pheno.ensemble.all')) and 'wgtloss' not in args.load_model_weights: # for MLP ensembles
+                if args.load_model_weights.startswith('finetune_pheno.ensemble.all'):
+                    copy_targets = [
+                        ('mod.fc.0.0.weight', 'ft_mlp.0.0.weight'),
+                        ('mod.fc.0.0.bias', 'ft_mlp.0.0.bias'),
+                        ('mod.fc.1.weight', 'ft_mlp.1.0.weight'),
+                        ('mod.fc.1.bias', 'ft_mlp.1.0.bias'),
+                    ]
+                elif args.load_model_weights.startswith('finetune_pheno.ensemble.0'):
+                    copy_targets = [
+                        ('mod.fc.0.0.weight', 'ft_mlp.0.0.weight'),
+                        ('mod.fc.0.0.bias', 'ft_mlp.0.0.bias'),
+                    ]
+                for key in state_dict.keys():
+                    for mother_key, dau_match_key in copy_targets:
+                        if key.endswith(dau_match_key):
+                            state_dict[key].copy_(model_state[mother_key].data)
+                            print(f'Copy {mother_key} -> {key}')
+                if '+part' in args.load_model_weights:
+                    for key in model_state.keys():
+                        state_dict['part.'+key].copy_(model_state[key].data)
+                        print(f'Copy part model params: {key}')
+            elif args.load_model_weights.startswith('finetune_pheno.ensemble.0+wgtloss:'):
+                weight_model_path = args.load_model_weights.split(':')[-1]
+                weight_model_state = torch.load(weight_model_path, map_location='cpu')
+                copy_targets = [
+                    ('mod.fc.0.0.weight', 'ft_mlp.0.0.weight'),
+                    ('mod.fc.0.0.bias', 'ft_mlp.0.0.bias'),
+                ]
+                for key in state_dict.keys():
+                    if key.startswith('m_weight.'):
+                        state_dict[key].copy_(weight_model_state[key.replace('m_weight.', '')].data)
+                        print(f'Copy weight model params: {key}')
+                    elif key.startswith('m_main.'):
+                        for mother_key, dau_match_key in copy_targets:
+                            if key.endswith(dau_match_key):
+                                state_dict[key].copy_(model_state[mother_key].data)
+                                print(f'Copy main model params: {mother_key} -> {key}')
+                    else:
+                        raise ValueError(f'Unknown key: {key}')
+
+        elif args.load_model_weights.startswith('finetune_pheno_mergeQCD.'):
+            model_state = torch.load("/home/olympus/licq/hww/incl-train/weaver-core/weaver/model/JetClassII_ak8puppi_full_scale_mergeQCD/net_best_epoch_state.pt", map_location='cpu')
+            state_dict = model.state_dict()
+            if args.load_model_weights == 'finetune_pheno_mergeQCD.all': # take all layers after ft nodes
+                state_dict[f'ft_mlp.0.0.weight'].copy_(model_state[f'mod.fc.0.0.weight'].data)
+                state_dict[f'ft_mlp.0.0.bias'].copy_(model_state[f'mod.fc.0.0.bias'].data)
+                state_dict[f'ft_mlp.1.0.weight'].copy_(model_state[f'mod.fc.1.weight'].data)
+                state_dict[f'ft_mlp.1.0.bias'].copy_(model_state[f'mod.fc.1.bias'].data)
+        elif args.load_model_weights.startswith('wgtloss:'):
+            state_dict = model.state_dict()
+            weight_model_path = args.load_model_weights.split(':')[-1]
+            weight_model_state = torch.load(weight_model_path, map_location='cpu')
+            for key in state_dict.keys():
+                if key.startswith('m_weight.'):
+                    state_dict[key].copy_(weight_model_state[key.replace('m_weight.', '')].data)
+                    print(f'Copy weight model params: {key}')
+
         else:
             model_state = torch.load(args.load_model_weights, map_location='cpu')
             missing_keys, unexpected_keys = model.load_state_dict(model_state, strict=False)
@@ -622,7 +754,11 @@ def save_root(args, output_path, data_config, scores, labels, observers):
         for idx in range(1, len(data_config.label_names)):
             name = data_config.label_names[idx]
             output[name] = labels[name]
-            output['output_' + name] = scores_reg[:, idx-1]
+            if not data_config.split_per_cls:
+                output['output_' + name] = scores_reg[:, idx-1]
+            else:
+                for idx_cls, label_name in enumerate(data_config.label_value_cls_names):
+                    output['output_' + name + '_' + label_name] = scores_reg[:, (idx-1) * data_config.label_value_cls_num + idx_cls]
     # write classification nodes
     if args.train_mode in ['cls', 'hybrid']:
         if data_config.label_value is not None:
@@ -678,10 +814,17 @@ def _main(args):
         _logger.info('Running in hybrid mode')
         from utils.nn.tools import train_hybrid as train
         from utils.nn.tools import evaluate_hybrid as evaluate
+    elif args.train_mode == 'custom':
+        _logger.info('Running in customised mode')
+        from utils.nn.tools import train_custom as train
+        from utils.nn.tools import evaluate_custom as evaluate
     else:
         _logger.info('Running in classification mode')
         from utils.nn.tools import train_classification as train
         from utils.nn.tools import evaluate_classification as evaluate
+        if args.train_mode_params == 'metric:loss':
+            from functools import partial
+            evaluate = partial(evaluate, best_val_metrics='loss')
 
     # training/testing mode
     training_mode = not args.predict
@@ -705,7 +848,8 @@ def _main(args):
         dev = torch.device('cpu')
     
     # torch configs
-    torch.set_float32_matmul_precision('high')
+    if torch.__version__.startswith('2.'):
+        torch.set_float32_matmul_precision('high')
 
     # load data
     if training_mode:
@@ -775,42 +919,74 @@ def _main(args):
             return
 
         # training loop
-        best_valid_metric = np.inf if args.train_mode in ['regression', 'hybrid'] else 0
+        best_valid_metric = np.inf if args.train_mode in ['regression', 'hybrid'] or (args.train_mode == 'cls' and args.train_mode_params == 'metric:loss') else 0
         grad_scaler = torch.cuda.amp.GradScaler() if args.use_amp else None
         for epoch in range(args.num_epochs):
             if args.load_epoch is not None:
                 if epoch <= args.load_epoch:
                     continue
             _logger.info('-' * 50)
-            _logger.info('Epoch #%d training' % epoch)
-            train(model, loss_func, opt, scheduler, train_loader, dev, epoch,
-                  steps_per_epoch=args.steps_per_epoch, grad_scaler=grad_scaler, tb_helper=tb)
-            if args.model_prefix and (args.backend is None or local_rank == 0):
-                dirname = os.path.dirname(args.model_prefix)
-                if dirname and not os.path.exists(dirname):
-                    os.makedirs(dirname)
-                state_dict = model.module.state_dict() if isinstance(
-                    model, (torch.nn.DataParallel, torch.nn.parallel.DistributedDataParallel)) else model.state_dict()
-                torch.save(state_dict, args.model_prefix + '_epoch-%d_state.pt' % epoch)
-                torch.save(opt.state_dict(), args.model_prefix + '_epoch-%d_optimizer.pt' % epoch)
-            # if args.backend is not None and local_rank == 0:
-            # TODO: save checkpoint
-            #     save_checkpoint()
 
-            _logger.info('Epoch #%d validating' % epoch)
-            valid_metric = evaluate(model, val_loader, dev, epoch, loss_func=loss_func,
-                                    steps_per_epoch=args.steps_per_epoch_val, tb_helper=tb)
-            is_best_epoch = (
-                valid_metric < best_valid_metric) if args.train_mode in ['regression', 'hybrid'] else(
-                valid_metric > best_valid_metric)
-            if is_best_epoch:
-                best_valid_metric = valid_metric
+            if args.run_mode in ['default', 'train-only']:
+                _logger.info('Epoch #%d training' % epoch)
+                train_loss = train(model, loss_func, opt, scheduler, train_loader, dev, epoch,
+                    steps_per_epoch=args.steps_per_epoch, grad_scaler=grad_scaler, tb_helper=tb)
+                # train_loader.dataset.restart_at_curr_pos()
+                if args.model_prefix and (args.backend is None or local_rank == 0):
+                    dirname = os.path.dirname(args.model_prefix)
+                    if dirname and not os.path.exists(dirname):
+                        os.makedirs(dirname)
+                    state_dict = model.module.state_dict() if isinstance(
+                        model, (torch.nn.DataParallel, torch.nn.parallel.DistributedDataParallel)) else model.state_dict()
+                    torch.save(state_dict, args.model_prefix + '_epoch-%d_state.pt' % epoch)
+                    torch.save(opt.state_dict(), args.model_prefix + '_epoch-%d_optimizer.pt' % epoch)
+                # if args.backend is not None and local_rank == 0:
+                # TODO: save checkpoint
+                #     save_checkpoint()
+
+            if args.run_mode in ['default', 'val-only']:
+                _logger.info('Epoch #%d validating' % epoch)
+                if args.run_mode == 'val-only':
+                    # check if the model to load exists
+                    import time
+                    while not os.path.exists(args.model_prefix + '_epoch-%d_state.pt' % epoch):
+                        _logger.info('Waiting for model %s to be ready...' % (args.model_prefix + '_epoch-%d_state.pt' % epoch))
+                        time.sleep(10)
+                    time.sleep(10)
+                    model.load_state_dict(torch.load(args.model_prefix + '_epoch-%d_state.pt' % epoch, map_location=dev))
+
+                valid_metric = evaluate(model, val_loader, dev, epoch, loss_func=loss_func,
+                                        steps_per_epoch=args.steps_per_epoch_val, tb_helper=tb)
+                # val_loader.dataset.restart_at_curr_pos()
+                is_best_epoch = (
+                    valid_metric < best_valid_metric) if args.train_mode in ['regression', 'hybrid'] or (args.train_mode == 'cls' and args.train_mode_params == 'metric:loss') else(
+                    valid_metric > best_valid_metric)
+                if is_best_epoch:
+                    best_valid_metric = valid_metric
+                    if args.model_prefix and (args.backend is None or local_rank == 0):
+                        shutil.copy2(args.model_prefix + '_epoch-%d_state.pt' %
+                                    epoch, args.model_prefix + '_best_epoch_state.pt')
+                        # torch.save(model, args.model_prefix + '_best_epoch_full.pt')
+                _logger.info('Epoch #%d: Current validation metric: %.5f (best: %.5f)' %
+                            (epoch, valid_metric, best_valid_metric), color='bold')
+
+            if args.early_stop:
+                assert args.run_mode == 'default'
+                # override the best_epoch behavier and break if the eval loss exceeds the training loss too much
+                if args.train_mode == 'cls':
+                    assert args.train_mode_params == 'metric:loss'
                 if args.model_prefix and (args.backend is None or local_rank == 0):
                     shutil.copy2(args.model_prefix + '_epoch-%d_state.pt' %
-                                 epoch, args.model_prefix + '_best_epoch_state.pt')
-                    # torch.save(model, args.model_prefix + '_best_epoch_full.pt')
-            _logger.info('Epoch #%d: Current validation metric: %.5f (best: %.5f)' %
-                         (epoch, valid_metric, best_valid_metric), color='bold')
+                                epoch, args.model_prefix + '_best_epoch_state.pt')
+                if valid_metric - train_loss > args.early_stop_dlr:
+                    _logger.info('Early stop at epoch %d' % epoch)
+                    break
+            
+            if args.use_last_model:
+                if args.model_prefix and (args.backend is None or local_rank == 0):
+                    shutil.copy2(args.model_prefix + '_epoch-%d_state.pt' %
+                                epoch, args.model_prefix + '_best_epoch_state.pt')
+
 
     if args.data_test:
         if args.backend is not None and local_rank != 0:
@@ -867,7 +1043,6 @@ def _main(args):
 
 
 def main():
-    
     args = parser.parse_args()
 
     if args.samples_per_epoch is not None:
@@ -915,6 +1090,11 @@ def main():
         if args.local_rank != 0:
             stdout = None
     _configLogger('weaver', stdout=stdout, filename=args.log_file)
+
+    if args.seed != -1:
+        _logger.info('Setting random seed to %d' % args.seed)
+        torch.manual_seed(args.seed)
+        np.random.seed(args.seed)
 
     _main(args)
 
