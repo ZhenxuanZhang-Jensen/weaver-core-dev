@@ -579,7 +579,14 @@ def model_setup(args, data_config):
     :return: model, model_info, network_module, network_options
     """
     network_module = import_module(args.network_config, name='_network_module')
-    network_options = {k: ast.literal_eval(v) for k, v in args.network_option}
+    print('args', args)
+    # network_options = {k: ast.literal_eval(v) for k, v in args.network_option}
+    network_options = {key: ast.literal_eval(value) for key, value in args.network_option}
+    # key, value = args.network_option
+    # # 使用 ast.literal_eval 来安全地解析字符串为 Python 对象
+    # parsed_value = ast.literal_eval(value)
+    # network_options =  (key, parsed_value)
+    print('args.network_option', args.network_option)
     _logger.info('Network options: %s' % str(network_options))
     if args.export_onnx:
         network_options['for_inference'] = True
@@ -1044,7 +1051,7 @@ def _main(args):
 
 def main():
     args = parser.parse_args()
-
+    print('args', args)
     if args.samples_per_epoch is not None:
         if args.steps_per_epoch is None:
             args.steps_per_epoch = args.samples_per_epoch // args.batch_size

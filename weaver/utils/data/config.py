@@ -114,6 +114,10 @@ class DataConfig(object):
             self.label_names.extend(list(self.label_value_custom.keys()))
             self.var_funcs.update(self.label_value_custom)
             self.label_value_reg_num = len(self.label_value_custom)
+            self.split_per_cls = opts['labels'].get('split_per_cls', False)
+            if self.split_per_cls:
+                self.label_value_reg_num *= self.label_value_cls_num
+
         self.label_names = tuple(self.label_names)
         self.basewgt_name = '_basewgt_'
         self.weight_name = None
@@ -217,11 +221,17 @@ class DataConfig(object):
             yaml.safe_dump(self.options, f, sort_keys=False)
 
     @classmethod
-    def load(cls, fp, load_observers=True):
+    def load(cls, fp, load_observers=True, extra_selection=None, extra_test_selection=None):
         with open(fp) as f:
             options = yaml.safe_load(f)
         if not load_observers:
             options['observers'] = None
+        if extra_selection:
+            options['selection'] = '(%s) & (%s)' % (options['selection'], extra_selection)
+        if extra_test_selection:
+            if 'test_time_selection' not in options:
+                raise RuntimeError('`test_time_selection` is not defined in the yaml file!')
+            options['test_time_selection'] = '(%s) & (%s)' % (options['test_time_selection'], extra_test_selection)
         return cls(**options)
 
     def copy(self):
@@ -235,11 +245,21 @@ class DataConfig(object):
 
     def export_json(self, fp):
         import json
-        j = {'output_names': self.label_value, 'input_names': self.input_names}
+        j = {'output_names': self.label_value if self.label_value is not None else self.label_value_cls_names, 'input_names': self.input_names}
+        if self.label_type == 'hybrid':
+            j['output_names'] += self.label_value_custom
         for k, v in self.input_dicts.items():
             j[k] = {'var_names': v, 'var_infos': {}}
             for var_name in v:
-                j[k]['var_length'] = self.preprocess_params[var_name]['length']
+                j[k]['max_length'] = self.preprocess_params[var_name]['length']
+                j[k]['min_length'] = None
+                min_length_dict = {'pfcand': 16, 'cpfcandlt': 12, 'npfcand': 8, 'sv': 1}
+                for s, min_len in min_length_dict.items():
+                    if var_name.startswith(s):
+                        j[k]['min_length'] = min_len
+                        break
+                if j[k]['min_length'] is None:
+                    raise ValueError('unknown var_name: %s' % var_name)
                 info = self.preprocess_params[var_name]
                 j[k]['var_infos'][var_name] = {
                     'median': 0 if info['center'] is None else info['center'],

@@ -1,0 +1,1057 @@
+args Namespace(train_mode='cls', train_mode_params='', run_mode='default', early_stop=False, early_stop_dlr=0.0005, use_last_model=False, extra_selection=None, seed=-1, data_config='/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/data_new/nonMD/ak8_nonMD_inclv8_forTop_GloParT.yaml', data_train=['/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/*.root'], data_val=[], data_test=['qcd:/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/infer/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/*.root', 'ttbar:/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/infer/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/*.root'], data_fraction=1, file_fraction=1, fetch_by_files=False, fetch_step=0.01, in_memory=False, train_val_split=0.8, test_range=[0, 1], demo=False, lr_finder=None, tensorboard='_ak8_finetune_stage2_topVsQCD_manual.aux256-256', tensorboard_custom_fn=None, network_config='/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/networks/finetune_stage2/mlp.py', network_option=[['ft_layer_params', '[(1024,0)]'], ['aux_layer_params', '[(256,0),(256,0)]']], model_prefix='/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/model/ak8_finetune_stage2_topVsQCD_manual.aux256-256/net', load_model_weights=None, num_epochs=1, steps_per_epoch=None, steps_per_epoch_val=None, samples_per_epoch=256000, samples_per_epoch_val=256000, optimizer='ranger', optimizer_option=[], lr_scheduler='one-cycle', warmup_steps=0, load_epoch=None, start_lr=0.02, batch_size=512, use_amp=False, compile_model=False, gpus='0', predict_gpus=None, num_workers=10, predict=False, predict_output='/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/predict/ak8_finetune_stage2_topVsQCD_manual.aux256-256/pred.root', export_onnx=None, io_test=False, copy_inputs=False, log_file='/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/logs/ak8_finetune_stage2_topVsQCD_manual.aux256-256/train.log', print=False, profile=False, backend=None)
+[2024-07-23 22:48:12,075] INFO: args:
+ - ('train_mode', 'cls')
+ - ('train_mode_params', '')
+ - ('run_mode', 'default')
+ - ('early_stop', False)
+ - ('early_stop_dlr', 0.0005)
+ - ('use_last_model', False)
+ - ('extra_selection', None)
+ - ('seed', -1)
+ - ('data_config', '/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/data_new/nonMD/ak8_nonMD_inclv8_forTop_GloParT.yaml')
+ - ('data_train', ['/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/*.root'])
+ - ('data_val', [])
+ - ('data_test', ['qcd:/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/infer/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/*.root', 'ttbar:/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/infer/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/*.root'])
+ - ('data_fraction', 1)
+ - ('file_fraction', 1)
+ - ('fetch_by_files', False)
+ - ('fetch_step', 0.01)
+ - ('in_memory', False)
+ - ('train_val_split', 0.8)
+ - ('test_range', [0, 1])
+ - ('demo', False)
+ - ('lr_finder', None)
+ - ('tensorboard', '_ak8_finetune_stage2_topVsQCD_manual.aux256-256')
+ - ('tensorboard_custom_fn', None)
+ - ('network_config', '/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/networks/finetune_stage2/mlp.py')
+ - ('network_option', [['ft_layer_params', '[(1024,0)]'], ['aux_layer_params', '[(256,0),(256,0)]']])
+ - ('model_prefix', '/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/model/ak8_finetune_stage2_topVsQCD_manual.aux256-256/net')
+ - ('load_model_weights', None)
+ - ('num_epochs', 1)
+ - ('steps_per_epoch', 500)
+ - ('steps_per_epoch_val', 500)
+ - ('samples_per_epoch', 256000)
+ - ('samples_per_epoch_val', 256000)
+ - ('optimizer', 'ranger')
+ - ('optimizer_option', [])
+ - ('lr_scheduler', 'one-cycle')
+ - ('warmup_steps', 0)
+ - ('load_epoch', None)
+ - ('start_lr', 0.02)
+ - ('batch_size', 512)
+ - ('use_amp', False)
+ - ('compile_model', False)
+ - ('gpus', '0')
+ - ('predict_gpus', '0')
+ - ('num_workers', 10)
+ - ('predict', False)
+ - ('predict_output', '/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/predict/ak8_finetune_stage2_topVsQCD_manual.aux256-256/pred.root')
+ - ('export_onnx', None)
+ - ('io_test', False)
+ - ('copy_inputs', False)
+ - ('log_file', '/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/logs/ak8_finetune_stage2_topVsQCD_manual.aux256-256/train.log')
+ - ('print', False)
+ - ('profile', False)
+ - ('backend', None)
+ - ('local_rank', None)
+[2024-07-23 22:48:12,076] INFO: Running in classification mode
+[2024-07-23 22:48:13,038] INFO: Using 622 files for training, range: (0, 0.8)
+[2024-07-23 22:48:13,038] INFO: Using 622 files for validation, range: (0.8, 1)
+[2024-07-23 22:48:13,039] INFO: Found file /hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/data_new/nonMD/ak8_nonMD_inclv8_forTop_GloParT.f5682a17e83fd89555c4072fd86511ff.auto.yaml w/ auto-generated preprocessing information, will use that instead!
+[2024-07-23 22:48:13,059] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': None, 'params': None}[0m
+[2024-07-23 22:48:13,059] INFO: [0;37mselection: (jet_tightId==1) & (jet_no<2) & (fj_pt>200) & (fj_pt<2500) & (fj_sdmass>=20) & (fj_sdmass<260) & (
+  ( (fj_label >= 309) & (fj_label < 314) & (sample_isQCD==1) & (event_no%7!=0) ) |
+  ( (fj_label <= 45) & (sample_isQCD==0)  & (event_no%7!=0) )
+)[0m
+[2024-07-23 22:48:13,059] INFO: [0;37mtest_time_selection: (jet_tightId==1) & (jet_no<2) & (
+  ((sample_isQCD==1) & (event_no%28==0)) |
+  ((sample_isQCD==0) & (event_no%7==0))
+)[0m
+[2024-07-23 22:48:13,059] INFO: [0;37mvar_funcs:
+ - ('fj_label_modified_QCD', 'ak.where(fj_label>=309, fj_label-286, fj_label)')
+ - ('fj_label_modified_WSL', 'ak.where(fj_label_modified_QCD>=30, fj_label_modified_QCD-13, fj_label_modified_QCD)')
+ - ('fj_label_noH', 'ak.where(fj_label_modified_WSL>=37, fj_label_modified_WSL-18, fj_label_modified_WSL)')
+ - ('fj_pt_log', 'np.log(fj_pt)')
+ - ('fj_sdmass_log', 'np.log(np.maximum(fj_sdmass, 1e-8))')
+ - ('_label_', 'fj_label_noH')
+ - ('_labelcheck_', 'ak.ones_like(fj_label_noH)')[0m
+[2024-07-23 22:48:13,059] INFO: [0;37minput_names: ('ft_vars', 'aux_vars')[0m
+[2024-07-23 22:48:13,060] INFO: [0;37minput_dicts:
+ - ('ft_vars', ['jet_custom_discs'])
+ - ('aux_vars', ['fj_pt_log', 'fj_sdmass_log'])[0m
+[2024-07-23 22:48:13,060] INFO: [0;37minput_shapes:
+ - ('ft_vars', (-1, 1, 256))
+ - ('aux_vars', (-1, 2))[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mpreprocess_params:
+ - ('jet_custom_discs', {'length': 256, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_pt_log', {'length': None, 'pad_mode': 'constant', 'center': 7.0, 'scale': 2.0, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_sdmass_log', {'length': None, 'pad_mode': 'constant', 'center': 4.0, 'scale': 0.5, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mobserver_names: ('event_no', 'fj_label', 'fj_pt', 'fj_eta', 'fj_phi', 'fj_mass', 'fj_sdmass', 'fj_sdmass_fromsubjets', 'fj_gen_mass', 'fj_genparts_mass', 'fj_genjet_sdmass', 'fj_genjet_nomu_sdmass', 'sample_isQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XbbvsQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XccvsQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XqqvsQCD', 'pfMassDecorrelatedParticleNetJetTags_probQCDb', 'pfMassDecorrelatedParticleNetJetTags_probQCDbb', 'pfMassDecorrelatedParticleNetJetTags_probQCDc', 'pfMassDecorrelatedParticleNetJetTags_probQCDcc', 'pfMassDecorrelatedParticleNetJetTags_probQCDothers', 'pfMassDecorrelatedParticleNetJetTags_probXbb', 'pfMassDecorrelatedParticleNetJetTags_probXcc', 'pfMassDecorrelatedParticleNetJetTags_probXqq', 'pfParticleNetDiscriminatorsJetTags_H4qvsQCD', 'pfParticleNetDiscriminatorsJetTags_HbbvsQCD', 'pfParticleNetDiscriminatorsJetTags_HccvsQCD', 'pfParticleNetDiscriminatorsJetTags_TvsQCD', 'pfParticleNetDiscriminatorsJetTags_WvsQCD', 'pfParticleNetDiscriminatorsJetTags_ZbbvsQCD', 'pfParticleNetDiscriminatorsJetTags_ZvsQCD', 'pfParticleNetJetTags_probHbb', 'pfParticleNetJetTags_probHcc', 'pfParticleNetJetTags_probHqqqq', 'pfParticleNetJetTags_probQCDb', 'pfParticleNetJetTags_probQCDbb', 'pfParticleNetJetTags_probQCDc', 'pfParticleNetJetTags_probQCDcc', 'pfParticleNetJetTags_probQCDothers', 'pfParticleNetJetTags_probTbc', 'pfParticleNetJetTags_probTbcq', 'pfParticleNetJetTags_probTbel', 'pfParticleNetJetTags_probTbmu', 'pfParticleNetJetTags_probTbq', 'pfParticleNetJetTags_probTbqq', 'pfParticleNetJetTags_probTbta', 'pfParticleNetJetTags_probWcq', 'pfParticleNetJetTags_probWqq', 'pfParticleNetJetTags_probZbb', 'pfParticleNetJetTags_probZcc', 'pfParticleNetJetTags_probZqq')[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mmonitor_variables: ()[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mreweight_method: flat[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mreweight_basewgt: None[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mreweight_branches: ('fj_pt', 'fj_sdmass')[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mreweight_bins: ([200, 251, 316, 398, 501, 630, 793, 997, 1255, 1579, 1987, 2500], [-10000, 10000])[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mreweight_classes: ('fj_isQCD', 'fj_isTop')[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mclass_weights: [1, 1][0m
+[2024-07-23 22:48:13,060] INFO: [0;37mreweight_threshold: 10[0m
+[2024-07-23 22:48:13,060] INFO: [0;37mreweight_discard_under_overflow: True[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': None, 'params': None}[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mselection: (jet_tightId==1) & (jet_no<2) & (fj_pt>200) & (fj_pt<2500) & (fj_sdmass>=20) & (fj_sdmass<260) & (
+  ( (fj_label >= 309) & (fj_label < 314) & (sample_isQCD==1) & (event_no%7!=0) ) |
+  ( (fj_label <= 45) & (sample_isQCD==0)  & (event_no%7!=0) )
+)[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mtest_time_selection: (jet_tightId==1) & (jet_no<2) & (
+  ((sample_isQCD==1) & (event_no%28==0)) |
+  ((sample_isQCD==0) & (event_no%7==0))
+)[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mvar_funcs:
+ - ('fj_label_modified_QCD', 'ak.where(fj_label>=309, fj_label-286, fj_label)')
+ - ('fj_label_modified_WSL', 'ak.where(fj_label_modified_QCD>=30, fj_label_modified_QCD-13, fj_label_modified_QCD)')
+ - ('fj_label_noH', 'ak.where(fj_label_modified_WSL>=37, fj_label_modified_WSL-18, fj_label_modified_WSL)')
+ - ('fj_pt_log', 'np.log(fj_pt)')
+ - ('fj_sdmass_log', 'np.log(np.maximum(fj_sdmass, 1e-8))')
+ - ('_label_', 'fj_label_noH')
+ - ('_labelcheck_', 'ak.ones_like(fj_label_noH)')[0m
+[2024-07-23 22:48:13,072] INFO: [0;37minput_names: ('ft_vars', 'aux_vars')[0m
+[2024-07-23 22:48:13,072] INFO: [0;37minput_dicts:
+ - ('ft_vars', ['jet_custom_discs'])
+ - ('aux_vars', ['fj_pt_log', 'fj_sdmass_log'])[0m
+[2024-07-23 22:48:13,072] INFO: [0;37minput_shapes:
+ - ('ft_vars', (-1, 1, 256))
+ - ('aux_vars', (-1, 2))[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mpreprocess_params:
+ - ('jet_custom_discs', {'length': 256, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_pt_log', {'length': None, 'pad_mode': 'constant', 'center': 7.0, 'scale': 2.0, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_sdmass_log', {'length': None, 'pad_mode': 'constant', 'center': 4.0, 'scale': 0.5, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mobserver_names: ()[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mmonitor_variables: ()[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mreweight_method: flat[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mreweight_basewgt: None[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mreweight_branches: ('fj_pt', 'fj_sdmass')[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mreweight_bins: ([200, 251, 316, 398, 501, 630, 793, 997, 1255, 1579, 1987, 2500], [-10000, 10000])[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mreweight_classes: ('fj_isQCD', 'fj_isTop')[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mclass_weights: [1, 1][0m
+[2024-07-23 22:48:13,072] INFO: [0;37mreweight_threshold: 10[0m
+[2024-07-23 22:48:13,072] INFO: [0;37mreweight_discard_under_overflow: True[0m
+[2024-07-23 22:48:13,074] INFO: Found file /hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/data_new/nonMD/ak8_nonMD_inclv8_forTop_GloParT.f5682a17e83fd89555c4072fd86511ff.auto.yaml w/ auto-generated preprocessing information, will use that instead!
+[2024-07-23 22:48:13,084] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': None, 'params': None}[0m
+[2024-07-23 22:48:13,084] INFO: [0;37mselection: (jet_tightId==1) & (jet_no<2) & (fj_pt>200) & (fj_pt<2500) & (fj_sdmass>=20) & (fj_sdmass<260) & (
+  ( (fj_label >= 309) & (fj_label < 314) & (sample_isQCD==1) & (event_no%7!=0) ) |
+  ( (fj_label <= 45) & (sample_isQCD==0)  & (event_no%7!=0) )
+)[0m
+[2024-07-23 22:48:13,084] INFO: [0;37mtest_time_selection: (jet_tightId==1) & (jet_no<2) & (
+  ((sample_isQCD==1) & (event_no%28==0)) |
+  ((sample_isQCD==0) & (event_no%7==0))
+)[0m
+[2024-07-23 22:48:13,084] INFO: [0;37mvar_funcs:
+ - ('fj_label_modified_QCD', 'ak.where(fj_label>=309, fj_label-286, fj_label)')
+ - ('fj_label_modified_WSL', 'ak.where(fj_label_modified_QCD>=30, fj_label_modified_QCD-13, fj_label_modified_QCD)')
+ - ('fj_label_noH', 'ak.where(fj_label_modified_WSL>=37, fj_label_modified_WSL-18, fj_label_modified_WSL)')
+ - ('fj_pt_log', 'np.log(fj_pt)')
+ - ('fj_sdmass_log', 'np.log(np.maximum(fj_sdmass, 1e-8))')
+ - ('_label_', 'fj_label_noH')
+ - ('_labelcheck_', 'ak.ones_like(fj_label_noH)')[0m
+[2024-07-23 22:48:13,084] INFO: [0;37minput_names: ('ft_vars', 'aux_vars')[0m
+[2024-07-23 22:48:13,084] INFO: [0;37minput_dicts:
+ - ('ft_vars', ['jet_custom_discs'])
+ - ('aux_vars', ['fj_pt_log', 'fj_sdmass_log'])[0m
+[2024-07-23 22:48:13,084] INFO: [0;37minput_shapes:
+ - ('ft_vars', (-1, 1, 256))
+ - ('aux_vars', (-1, 2))[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mpreprocess_params:
+ - ('jet_custom_discs', {'length': 256, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_pt_log', {'length': None, 'pad_mode': 'constant', 'center': 7.0, 'scale': 2.0, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_sdmass_log', {'length': None, 'pad_mode': 'constant', 'center': 4.0, 'scale': 0.5, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mobserver_names: ('event_no', 'fj_label', 'fj_pt', 'fj_eta', 'fj_phi', 'fj_mass', 'fj_sdmass', 'fj_sdmass_fromsubjets', 'fj_gen_mass', 'fj_genparts_mass', 'fj_genjet_sdmass', 'fj_genjet_nomu_sdmass', 'sample_isQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XbbvsQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XccvsQCD', 'pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XqqvsQCD', 'pfMassDecorrelatedParticleNetJetTags_probQCDb', 'pfMassDecorrelatedParticleNetJetTags_probQCDbb', 'pfMassDecorrelatedParticleNetJetTags_probQCDc', 'pfMassDecorrelatedParticleNetJetTags_probQCDcc', 'pfMassDecorrelatedParticleNetJetTags_probQCDothers', 'pfMassDecorrelatedParticleNetJetTags_probXbb', 'pfMassDecorrelatedParticleNetJetTags_probXcc', 'pfMassDecorrelatedParticleNetJetTags_probXqq', 'pfParticleNetDiscriminatorsJetTags_H4qvsQCD', 'pfParticleNetDiscriminatorsJetTags_HbbvsQCD', 'pfParticleNetDiscriminatorsJetTags_HccvsQCD', 'pfParticleNetDiscriminatorsJetTags_TvsQCD', 'pfParticleNetDiscriminatorsJetTags_WvsQCD', 'pfParticleNetDiscriminatorsJetTags_ZbbvsQCD', 'pfParticleNetDiscriminatorsJetTags_ZvsQCD', 'pfParticleNetJetTags_probHbb', 'pfParticleNetJetTags_probHcc', 'pfParticleNetJetTags_probHqqqq', 'pfParticleNetJetTags_probQCDb', 'pfParticleNetJetTags_probQCDbb', 'pfParticleNetJetTags_probQCDc', 'pfParticleNetJetTags_probQCDcc', 'pfParticleNetJetTags_probQCDothers', 'pfParticleNetJetTags_probTbc', 'pfParticleNetJetTags_probTbcq', 'pfParticleNetJetTags_probTbel', 'pfParticleNetJetTags_probTbmu', 'pfParticleNetJetTags_probTbq', 'pfParticleNetJetTags_probTbqq', 'pfParticleNetJetTags_probTbta', 'pfParticleNetJetTags_probWcq', 'pfParticleNetJetTags_probWqq', 'pfParticleNetJetTags_probZbb', 'pfParticleNetJetTags_probZcc', 'pfParticleNetJetTags_probZqq')[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mmonitor_variables: ()[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mreweight_method: flat[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mreweight_basewgt: None[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mreweight_branches: ('fj_pt', 'fj_sdmass')[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mreweight_bins: ([200, 251, 316, 398, 501, 630, 793, 997, 1255, 1579, 1987, 2500], [-10000, 10000])[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mreweight_classes: ('fj_isQCD', 'fj_isTop')[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mclass_weights: [1, 1][0m
+[2024-07-23 22:48:13,085] INFO: [0;37mreweight_threshold: 10[0m
+[2024-07-23 22:48:13,085] INFO: [0;37mreweight_discard_under_overflow: True[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mpreprocess config: {'method': 'manual', 'data_fraction': None, 'params': None}[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mselection: (jet_tightId==1) & (jet_no<2) & (fj_pt>200) & (fj_pt<2500) & (fj_sdmass>=20) & (fj_sdmass<260) & (
+  ( (fj_label >= 309) & (fj_label < 314) & (sample_isQCD==1) & (event_no%7!=0) ) |
+  ( (fj_label <= 45) & (sample_isQCD==0)  & (event_no%7!=0) )
+)[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mtest_time_selection: (jet_tightId==1) & (jet_no<2) & (
+  ((sample_isQCD==1) & (event_no%28==0)) |
+  ((sample_isQCD==0) & (event_no%7==0))
+)[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mvar_funcs:
+ - ('fj_label_modified_QCD', 'ak.where(fj_label>=309, fj_label-286, fj_label)')
+ - ('fj_label_modified_WSL', 'ak.where(fj_label_modified_QCD>=30, fj_label_modified_QCD-13, fj_label_modified_QCD)')
+ - ('fj_label_noH', 'ak.where(fj_label_modified_WSL>=37, fj_label_modified_WSL-18, fj_label_modified_WSL)')
+ - ('fj_pt_log', 'np.log(fj_pt)')
+ - ('fj_sdmass_log', 'np.log(np.maximum(fj_sdmass, 1e-8))')
+ - ('_label_', 'fj_label_noH')
+ - ('_labelcheck_', 'ak.ones_like(fj_label_noH)')[0m
+[2024-07-23 22:48:13,096] INFO: [0;37minput_names: ('ft_vars', 'aux_vars')[0m
+[2024-07-23 22:48:13,096] INFO: [0;37minput_dicts:
+ - ('ft_vars', ['jet_custom_discs'])
+ - ('aux_vars', ['fj_pt_log', 'fj_sdmass_log'])[0m
+[2024-07-23 22:48:13,096] INFO: [0;37minput_shapes:
+ - ('ft_vars', (-1, 1, 256))
+ - ('aux_vars', (-1, 2))[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mpreprocess_params:
+ - ('jet_custom_discs', {'length': 256, 'pad_mode': 'constant', 'center': None, 'scale': 1, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_pt_log', {'length': None, 'pad_mode': 'constant', 'center': 7.0, 'scale': 2.0, 'min': -5, 'max': 5, 'pad_value': 0})
+ - ('fj_sdmass_log', {'length': None, 'pad_mode': 'constant', 'center': 4.0, 'scale': 0.5, 'min': -5, 'max': 5, 'pad_value': 0})[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mlabel_names: ('_label_',)[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mobserver_names: ()[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mmonitor_variables: ()[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mreweight_method: flat[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mreweight_basewgt: None[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mreweight_branches: ('fj_pt', 'fj_sdmass')[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mreweight_bins: ([200, 251, 316, 398, 501, 630, 793, 997, 1255, 1579, 1987, 2500], [-10000, 10000])[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mreweight_classes: ('fj_isQCD', 'fj_isTop')[0m
+[2024-07-23 22:48:13,096] INFO: [0;37mclass_weights: [1, 1][0m
+[2024-07-23 22:48:13,096] INFO: [0;37mreweight_threshold: 10[0m
+[2024-07-23 22:48:13,097] INFO: [0;37mreweight_discard_under_overflow: True[0m
+args Namespace(train_mode='cls', train_mode_params='', run_mode='default', early_stop=False, early_stop_dlr=0.0005, use_last_model=False, extra_selection=None, seed=-1, data_config='/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/data_new/nonMD/ak8_nonMD_inclv8_forTop_GloParT.yaml', data_train=['/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/*.root', '/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/*.root'], data_val=[], data_test=['qcd:/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/infer/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/*.root', 'ttbar:/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/infer/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/*.root'], data_fraction=1, file_fraction=1, fetch_by_files=False, fetch_step=0.01, in_memory=False, train_val_split=0.8, test_range=[0, 1], demo=False, lr_finder=None, tensorboard='_ak8_finetune_stage2_topVsQCD_manual.aux256-256', tensorboard_custom_fn=None, network_config='/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/networks/finetune_stage2/mlp.py', network_option=[['ft_layer_params', '[(1024,0)]'], ['aux_layer_params', '[(256,0),(256,0)]']], model_prefix='/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/model/ak8_finetune_stage2_topVsQCD_manual.aux256-256/net', load_model_weights=None, num_epochs=1, steps_per_epoch=500, steps_per_epoch_val=500, samples_per_epoch=256000, samples_per_epoch_val=256000, optimizer='ranger', optimizer_option=[], lr_scheduler='one-cycle', warmup_steps=0, load_epoch=None, start_lr=0.02, batch_size=512, use_amp=False, compile_model=False, gpus='0', predict_gpus='0', num_workers=10, predict=False, predict_output='/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/predict/ak8_finetune_stage2_topVsQCD_manual.aux256-256/pred.root', export_onnx=None, io_test=False, copy_inputs=False, log_file='/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/logs/ak8_finetune_stage2_topVsQCD_manual.aux256-256/train.log', print=False, profile=False, backend=None, local_rank=None)
+args.network_option [['ft_layer_params', '[(1024,0)]'], ['aux_layer_params', '[(256,0),(256,0)]']]
+[2024-07-23 22:48:13,099] INFO: Network options: {'ft_layer_params': [(1024, 0)], 'aux_layer_params': [(256, 0), (256, 0)]}
+{'ft_layer_params': [(1024, 0)], 'aux_layer_params': [(256, 0), (256, 0)]}
+MultiLayerPerceptron(
+  (ft_mlp): ModuleList(
+    (0): Sequential(
+      (0): Linear(in_features=256, out_features=1024, bias=True)
+      (1): ReLU()
+      (2): Dropout(p=0, inplace=False)
+    )
+    (1): Linear(in_features=1024, out_features=28, bias=True)
+  )
+  (aux_mlp): ModuleList(
+    (0): Sequential(
+      (0): Linear(in_features=258, out_features=256, bias=True)
+      (1): ReLU()
+      (2): Dropout(p=0, inplace=False)
+    )
+    (1): Sequential(
+      (0): Linear(in_features=256, out_features=256, bias=True)
+      (1): ReLU()
+      (2): Dropout(p=0, inplace=False)
+    )
+    (2): Linear(in_features=256, out_features=28, bias=True)
+  )
+) {'input_names': ['ft_vars', 'aux_vars'], 'input_shapes': {'ft_vars': (1, 1, 256), 'aux_vars': (1, 2)}, 'output_names': ['softmax'], 'dynamic_axes': {'ft_vars': {0: 'N', 2: 'n_ft'}, 'aux_vars': {0: 'N', 2: 'n_aux'}, 'softmax': {0: 'N'}}}
+[2024-07-23 22:48:13,136] INFO: [0;37mWarning: module Dropout is treated as a zero-op.[0m
+[2024-07-23 22:48:13,137] INFO: [0;37mWarning: module MultiLayerPerceptron is treated as a zero-op.[0m
+[2024-07-23 22:48:13,160] INFO: [0;37mMultiLayerPerceptron(
+  |0.431 M, 100.000% Params, 432.696 KMac, 100.000% MACs|
+  (ft_mlp): ModuleList(
+    (0): Sequential(
+      |0.263 M, 61.037% Params, 264.192 KMac, 61.057% MACs|
+      (0): Linear(in_features=256, out_features=1024, bias=True, |0.263 M, 61.037% Params, 263.168 KMac, 60.821% MACs|)
+      (1): ReLU(|0.0 M, 0.000% Params, 1.024 KMac, 0.237% MACs|)
+      (2): Dropout(p=0, inplace=False, |0.0 M, 0.000% Params, 0.0 Mac, 0.000% MACs|)
+    )
+    (1): Linear(in_features=1024, out_features=28, bias=True, |0.029 M, 6.656% Params, 28.7 KMac, 6.633% MACs|)
+  )
+  (aux_mlp): ModuleList(
+    (0): Sequential(
+      |0.066 M, 15.378% Params, 66.56 KMac, 15.383% MACs|
+      (0): Linear(in_features=258, out_features=256, bias=True, |0.066 M, 15.378% Params, 66.304 KMac, 15.323% MACs|)
+      (1): ReLU(|0.0 M, 0.000% Params, 256.0 Mac, 0.059% MACs|)
+      (2): Dropout(p=0, inplace=False, |0.0 M, 0.000% Params, 0.0 Mac, 0.000% MACs|)
+    )
+    (1): Sequential(
+      |0.066 M, 15.259% Params, 66.048 KMac, 15.264% MACs|
+      (0): Linear(in_features=256, out_features=256, bias=True, |0.066 M, 15.259% Params, 65.792 KMac, 15.205% MACs|)
+      (1): ReLU(|0.0 M, 0.000% Params, 256.0 Mac, 0.059% MACs|)
+      (2): Dropout(p=0, inplace=False, |0.0 M, 0.000% Params, 0.0 Mac, 0.000% MACs|)
+    )
+    (2): Linear(in_features=256, out_features=28, bias=True, |0.007 M, 1.669% Params, 7.196 KMac, 1.663% MACs|)
+  )
+)[0m
+[2024-07-23 22:48:13,160] INFO: Computational complexity:       432.7 KMac
+[2024-07-23 22:48:13,160] INFO: Number of parameters:           431.16 k
+[2024-07-23 22:48:13,160] INFO: Using loss function CrossEntropyLoss() with options {'ft_layer_params': [(1024, 0)], 'aux_layer_params': [(256, 0), (256, 0)]}
+[2024-07-23 22:48:13,994] INFO: Create Tensorboard summary writer with comment _ak8_finetune_stage2_topVsQCD_manual.aux256-256
+[2024-07-23 22:48:14,306] INFO: Optimizer options: {}
+[2024-07-23 22:48:16,386] INFO: --------------------------------------------------
+[2024-07-23 22:48:16,387] INFO: Epoch #0 training
+0it [00:00, ?it/s]=== Restarting DataIter train_worker2, seed=1382494975 ===
+[2024-07-23 22:48:16,623] INFO: Restarted DataIter train_worker2, load_range=(0.0, 0.8), file_list:
+{
+  "_": [
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-10.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-109.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-118.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-127.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-136.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-146.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-155.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-164.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-173.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-182.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-191.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-20.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-209.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-218.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-227.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-236.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-245.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-254.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-263.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-272.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-281.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-290.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-3.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-308.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-319.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-33.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-342.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-353.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-362.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-371.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-380.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-39.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-399.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-407.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-416.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-425.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-434.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-443.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-452.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-461.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-470.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-52.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-61.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-70.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-8.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-89.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-98.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-16.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-25.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-34.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-43.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-52.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-7.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-15.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-24.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-33.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-42.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-51.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-60.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-11.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-20.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-3.root"
+  ]
+}
+[2024-07-23 22:48:16,624] INFO: Start fetching next batch, len(filelist)=62, load_range=(0.0, 0.01)
+=== Restarting DataIter train_worker0, seed=1382494973 ===
+[2024-07-23 22:48:16,663] INFO: Restarted DataIter train_worker0, load_range=(0.0, 0.8), file_list:
+{
+  "_": [
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-0.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-107.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-116.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-125.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-134.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-144.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-153.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-162.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-171.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-180.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-19.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-199.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-207.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-216.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-225.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-234.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-243.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-252.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-261.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-270.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-28.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-289.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-298.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-306.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-315.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-327.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-34.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-351.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-360.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-37.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-379.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-388.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-397.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-405.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-414.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-423.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-432.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-441.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-450.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-46.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-469.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-50.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-6.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-69.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-78.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-87.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-96.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-14.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-23.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-32.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-41.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-50.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-6.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-13.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-22.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-31.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-40.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-5.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-59.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-1.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-19.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-28.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-4.root"
+  ]
+}
+[2024-07-23 22:48:16,663] INFO: Start fetching next batch, len(filelist)=63, load_range=(0.0, 0.01)
+=== Restarting DataIter train_worker1, seed=1382494974 ===
+[2024-07-23 22:48:16,705] INFO: Restarted DataIter train_worker1, load_range=(0.0, 0.8), file_list:
+{
+  "_": [
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-1.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-108.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-117.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-126.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-135.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-145.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-154.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-163.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-172.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-181.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-190.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-2.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-208.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-217.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-226.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-235.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-244.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-253.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-262.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-271.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-280.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-29.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-299.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-307.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-316.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-329.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-341.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-352.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-361.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-370.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-38.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-389.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-398.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-406.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-415.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-424.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-433.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-442.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-451.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-460.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-47.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-51.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-60.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-7.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-79.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-88.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-97.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-15.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-24.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-33.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-42.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-51.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-60.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-14.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-23.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-32.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-41.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-50.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-6.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-10.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-2.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-29.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-5.root"
+  ]
+}
+[2024-07-23 22:48:16,706] INFO: Start fetching next batch, len(filelist)=63, load_range=(0.0, 0.01)
+=== Restarting DataIter train_worker3, seed=1382494976 ===
+[2024-07-23 22:48:16,710] INFO: Restarted DataIter train_worker3, load_range=(0.0, 0.8), file_list:
+{
+  "_": [
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-100.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-11.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-119.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-128.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-137.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-147.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-156.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-165.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-174.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-183.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-192.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-200.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-21.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-219.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-228.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-237.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-246.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-255.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-264.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-273.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-282.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-291.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-30.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-309.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-32.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-330.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-344.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-354.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-363.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-372.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-381.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-390.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-4.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-408.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-417.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-426.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-435.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-444.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-453.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-462.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-471.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-53.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-62.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-71.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-80.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-9.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-99.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-17.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-26.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-35.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-44.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-53.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-8.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-16.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-25.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-34.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-43.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-52.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-61.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-12.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-21.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-30.root"
+  ]
+}
+[2024-07-23 22:48:16,711] INFO: Start fetching next batch, len(filelist)=62, load_range=(0.0, 0.01)
+=== Restarting DataIter train_worker4, seed=1382494977 ===
+[2024-07-23 22:48:16,724] INFO: Restarted DataIter train_worker4, load_range=(0.0, 0.8), file_list:
+{
+  "_": [
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-101.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-110.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-12.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-129.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-138.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-148.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-157.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-166.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-175.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-184.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-193.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-201.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-210.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-22.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-229.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-238.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-247.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-256.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-265.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-274.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-283.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-292.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-300.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-31.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-320.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-331.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-345.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-355.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-364.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-373.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-382.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-391.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-40.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-409.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-418.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-427.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-436.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-445.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-454.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-463.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-472.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-54.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-63.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-72.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-81.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-90.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-0.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-18.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-27.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-36.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-45.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-54.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-9.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-17.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-26.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-35.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-44.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-53.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-62.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-13.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-22.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-31.root"
+  ]
+}
+[2024-07-23 22:48:16,725] INFO: Start fetching next batch, len(filelist)=62, load_range=(0.0, 0.01)
+=== Restarting DataIter train_worker5, seed=1382494978 ===
+[2024-07-23 22:48:16,747] INFO: Restarted DataIter train_worker5, load_range=(0.0, 0.8), file_list:
+{
+  "_": [
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-102.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-111.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-120.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-13.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-139.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-149.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-158.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-167.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-176.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-185.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-194.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-202.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-211.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-220.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-23.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-239.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-248.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-257.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-266.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-275.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-284.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-293.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-301.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-310.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-321.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-332.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-346.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-356.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-365.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-374.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-383.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-392.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-400.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-41.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-419.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-428.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-437.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-446.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-455.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-464.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-473.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-55.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-64.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-73.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-82.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-91.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-1.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-19.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-28.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-37.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-46.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-55.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-0.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-18.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-27.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-36.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-45.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-54.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-63.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-14.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-23.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-32.root"
+  ]
+}
+[2024-07-23 22:48:16,748] INFO: Start fetching next batch, len(filelist)=62, load_range=(0.0, 0.01)
+=== Restarting DataIter train_worker6, seed=1382494979 ===
+[2024-07-23 22:48:16,836] INFO: Restarted DataIter train_worker6, load_range=(0.0, 0.8), file_list:
+{
+  "_": [
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-103.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-112.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-121.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-130.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-14.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-15.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-159.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-168.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-177.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-186.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-195.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-203.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-212.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-221.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-230.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-24.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-249.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-258.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-267.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-276.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-285.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-294.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-302.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-311.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-322.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-335.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-347.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-357.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-366.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-375.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-384.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-393.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-401.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-410.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-42.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-429.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-438.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-447.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-456.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-465.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-474.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-56.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-65.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-74.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-83.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-92.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-10.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-2.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-29.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-38.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-47.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-56.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-1.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-19.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-28.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-37.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-46.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-55.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-7.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-15.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-24.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-33.root"
+  ]
+}
+[2024-07-23 22:48:16,836] INFO: Start fetching next batch, len(filelist)=62, load_range=(0.0, 0.01)
+=== Restarting DataIter train_worker7, seed=1382494980 ===
+[2024-07-23 22:48:16,853] INFO: Restarted DataIter train_worker7, load_range=(0.0, 0.8), file_list:
+{
+  "_": [
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-104.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-113.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-122.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-131.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-141.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-150.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-16.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-169.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-178.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-187.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-196.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-204.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-213.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-222.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-231.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-240.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-25.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-259.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-268.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-277.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-286.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-295.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-303.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-312.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-323.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-336.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-349.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-358.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-367.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-376.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-385.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-394.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-402.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-411.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-420.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-43.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-439.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-448.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-457.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-466.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-48.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-57.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-66.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-75.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-84.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-93.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-11.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-20.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-3.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-39.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-48.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-57.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-10.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-2.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-29.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-38.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-47.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-56.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-8.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-16.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-25.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-34.root"
+  ]
+}
+[2024-07-23 22:48:16,853] INFO: Start fetching next batch, len(filelist)=62, load_range=(0.0, 0.01)
+=== Restarting DataIter train_worker8, seed=1382494981 ===
+[2024-07-23 22:48:16,857] INFO: Restarted DataIter train_worker8, load_range=(0.0, 0.8), file_list:
+{
+  "_": [
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-105.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-114.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-123.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-132.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-142.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-151.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-160.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-17.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-179.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-188.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-197.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-205.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-214.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-223.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-232.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-241.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-250.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-26.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-269.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-278.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-287.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-296.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-304.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-313.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-324.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-337.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-35.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-359.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-368.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-377.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-386.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-395.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-403.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-412.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-421.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-430.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-44.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-449.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-458.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-467.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-49.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-58.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-67.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-76.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-85.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-94.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-12.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-21.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-30.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-4.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-49.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-58.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-11.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-20.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-3.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-39.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-48.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-57.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-9.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-17.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-26.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-35.root"
+  ]
+}
+[2024-07-23 22:48:16,858] INFO: Start fetching next batch, len(filelist)=62, load_range=(0.0, 0.01)
+=== Restarting DataIter train_worker9, seed=1382494982 ===
+[2024-07-23 22:48:16,951] INFO: Restarted DataIter train_worker9, load_range=(0.0, 0.8), file_list:
+{
+  "_": [
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-106.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-115.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-124.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-133.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-143.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-152.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-161.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-170.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-18.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-189.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-198.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-206.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-215.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-224.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-233.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-242.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-251.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-260.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-27.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-279.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-288.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-297.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-305.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-314.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-325.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-338.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-350.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-36.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-369.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-378.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-387.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-396.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-404.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-413.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-422.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-431.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-440.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-45.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-459.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-468.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-5.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-59.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-68.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-77.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-86.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/dnnTuples_8065357-95.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-13.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-22.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-31.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-40.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-5.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToWWToWhadWhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839712-59.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-12.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-21.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-30.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-4.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-49.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/BulkGravToZZToZhadZhad_narrow_M-500to4500_TuneCP5_13TeV-madgraph-pythia/dnnTuples_6839711-58.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-0.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-18.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-27.root",
+    "/cms/user/zhangzhx/nonMD_TOP_ParT_data/nonMD_top_data/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/dnnTuples_6839710-36.root"
+  ]
+}
+[2024-07-23 22:48:16,952] INFO: Start fetching next batch, len(filelist)=62, load_range=(0.0, 0.01)
+[2024-07-23 22:49:03,889] WARNING: Not all selected events used in the reweighting. Check consistency between `selection` and `reweight_classes` definition, or with the `reweight_vars` binnings (under- and overflow bins are discarded by default, unless `reweight_discard_under_overflow` is set to `False` in the `weights` section).
+[2024-07-23 22:49:04,121] WARNING: Not all selected events used in the reweighting. Check consistency between `selection` and `reweight_classes` definition, or with the `reweight_vars` binnings (under- and overflow bins are discarded by default, unless `reweight_discard_under_overflow` is set to `False` in the `weights` section).
+[2024-07-23 22:49:04,233] WARNING: Not all selected events used in the reweighting. Check consistency between `selection` and `reweight_classes` definition, or with the `reweight_vars` binnings (under- and overflow bins are discarded by default, unless `reweight_discard_under_overflow` is set to `False` in the `weights` section).
+[2024-07-23 22:49:04,575] WARNING: Not all selected events used in the reweighting. Check consistency between `selection` and `reweight_classes` definition, or with the `reweight_vars` binnings (under- and overflow bins are discarded by default, unless `reweight_discard_under_overflow` is set to `False` in the `weights` section).
+[2024-07-23 22:49:04,642] WARNING: Not all selected events used in the reweighting. Check consistency between `selection` and `reweight_classes` definition, or with the `reweight_vars` binnings (under- and overflow bins are discarded by default, unless `reweight_discard_under_overflow` is set to `False` in the `weights` section).
+[2024-07-23 22:49:04,678] WARNING: Not all selected events used in the reweighting. Check consistency between `selection` and `reweight_classes` definition, or with the `reweight_vars` binnings (under- and overflow bins are discarded by default, unless `reweight_discard_under_overflow` is set to `False` in the `weights` section).
+[2024-07-23 22:49:04,771] WARNING: Not all selected events used in the reweighting. Check consistency between `selection` and `reweight_classes` definition, or with the `reweight_vars` binnings (under- and overflow bins are discarded by default, unless `reweight_discard_under_overflow` is set to `False` in the `weights` section).
+[2024-07-23 22:49:05,072] WARNING: Not all selected events used in the reweighting. Check consistency between `selection` and `reweight_classes` definition, or with the `reweight_vars` binnings (under- and overflow bins are discarded by default, unless `reweight_discard_under_overflow` is set to `False` in the `weights` section).
+[2024-07-23 22:49:05,279] WARNING: Not all selected events used in the reweighting. Check consistency between `selection` and `reweight_classes` definition, or with the `reweight_vars` binnings (under- and overflow bins are discarded by default, unless `reweight_discard_under_overflow` is set to `False` in the `weights` section).
+0it [00:48, ?it/s]
+Traceback (most recent call last):
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/train.py", line 1110, in <module>
+    main()
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/train.py", line 1106, in main
+    _main(args)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/train.py", line 939, in _main
+    train_loss = train(model, loss_func, opt, scheduler, train_loader, dev, epoch,
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/utils/nn/tools.py", line 45, in train_classification
+    for X, y, _ in tq:
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/tqdm/std.py", line 1182, in __iter__
+    for obj in iterable:
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 630, in __next__
+    data = self._next_data()
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1345, in _next_data
+    return self._process_data(data)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1371, in _process_data
+    data.reraise()
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/torch/_utils.py", line 694, in reraise
+    raise exception
+awkward.errors.FieldNotFoundError: Caught FieldNotFoundError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/awkward/highlevel.py", line 1066, in __getitem__
+    prepare_layout(self._layout[where]),
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/awkward/contents/content.py", line 512, in __getitem__
+    return self._getitem(where)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/awkward/contents/content.py", line 529, in _getitem
+    return self._getitem_field(where)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/awkward/contents/recordarray.py", line 458, in _getitem_field
+    return self.content(where)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/awkward/contents/recordarray.py", line 394, in content
+    out = super().content(index_or_field)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/awkward/_meta/recordmeta.py", line 136, in content
+    index = self.field_to_index(index_or_field)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/awkward/_meta/recordmeta.py", line 117, in field_to_index
+    raise FieldNotFoundError(
+awkward.errors.FieldNotFoundError: no field 'jet_custom_discs' in record with 16 fields
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/torch/utils/data/_utils/worker.py", line 308, in _worker_loop
+    data = fetcher.fetch(index)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 32, in fetch
+    data.append(next(self.dataset_iter))
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/utils/dataset.py", line 218, in __next__
+    self.table, self.indices = self.prefetch.result()
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/concurrent/futures/_base.py", line 445, in result
+    return self.__get_result()
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/concurrent/futures/_base.py", line 390, in __get_result
+    raise self._exception
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/utils/dataset.py", line 110, in _load_next
+    table, indices = _preprocess(table, data_config, options)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/utils/dataset.py", line 104, in _preprocess
+    table = _finalize_inputs(table, data_config)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/utils/dataset.py", line 38, in _finalize_inputs
+    table[k] = pad_fn(table[k], params['length'])
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/awkward/highlevel.py", line 1064, in __getitem__
+    with ak._errors.SlicingErrorContext(self, where):
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/awkward/_errors.py", line 85, in __exit__
+    self.handle_exception(exception_type, exception_value)
+  File "/hpcfs/cms/cmsgpu/zhangzhx/miniconda3/envs/ML_env/lib/python3.10/site-packages/awkward/_errors.py", line 95, in handle_exception
+    raise self.decorate_exception(cls, exception)
+awkward.errors.FieldNotFoundError: no field 'jet_custom_discs' in record with 16 fields
+
+This error occurred while attempting to slice
+
+    <Array [{event_no: 12042005, ...}, ...] type='37134 * {event_no: uint32...'>
+
+with
+
+    'jet_custom_discs'
+
+[2024-07-23 22:49:05,412] WARNING: Not all selected events used in the reweighting. Check consistency between `selection` and `reweight_classes` definition, or with the `reweight_vars` binnings (under- and overflow bins are discarded by default, unless `reweight_discard_under_overflow` is set to `False` in the `weights` section).
