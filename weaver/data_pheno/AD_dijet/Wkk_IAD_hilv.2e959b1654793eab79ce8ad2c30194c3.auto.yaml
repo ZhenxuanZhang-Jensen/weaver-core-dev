@@ -7,6 +7,18 @@ preprocess:
   data_fraction: null
   params: null
 new_variables:
+  jet_1_nparticles_log: np.log(np.maximum(jet_1_nparticles, 1e-8))
+  jet_1_sdmass_log: np.log(np.maximum(jet_1_sdmass, 1e-8))
+  jet_1_tau1_log: np.log(np.maximum(jet_1_tau1, 1e-8))
+  jet_1_tau2_log: np.log(np.maximum(jet_1_tau2, 1e-8))
+  jet_1_tau3_log: np.log(np.maximum(jet_1_tau3, 1e-8))
+  jet_1_tau4_log: np.log(np.maximum(jet_1_tau4, 1e-8))
+  jet_2_nparticles_log: np.log(np.maximum(jet_2_nparticles, 1e-8))
+  jet_2_sdmass_log: np.log(np.maximum(jet_2_sdmass, 1e-8))
+  jet_2_tau1_log: np.log(np.maximum(jet_2_tau1, 1e-8))
+  jet_2_tau2_log: np.log(np.maximum(jet_2_tau2, 1e-8))
+  jet_2_tau3_log: np.log(np.maximum(jet_2_tau3, 1e-8))
+  jet_2_tau4_log: np.log(np.maximum(jet_2_tau4, 1e-8))
   label_data: (dijet_mass >= 2500) & (dijet_mass < 3100) & (event_no % 2 == 0)
   label_bkg: (dijet_mass >= 2500) & (dijet_mass < 3100) & (event_no % 2 == 1) & (event_class
     <= 18)
@@ -15,13 +27,44 @@ new_variables:
   _labelcheck_: np.sum(np.stack([label_data,label_bkg], axis=1), axis=1)
 inputs:
   ft_vars:
-    length: 128
-    pad_mode: constant
+    length: null
     vars:
-    - - jet_1_hidneurons
-      - null
-    - - jet_2_hidneurons
-      - null
+    - - jet_1_sdmass_log
+      - 3
+      - 0.8
+    - - jet_1_nparticles_log
+      - 4
+      - 1.5
+    - - jet_1_tau1_log
+      - -2
+      - 1
+    - - jet_1_tau2_log
+      - -3
+      - 1
+    - - jet_1_tau3_log
+      - -3.5
+      - 1
+    - - jet_1_tau4_log
+      - -4
+      - 1
+    - - jet_2_sdmass_log
+      - 3
+      - 0.8
+    - - jet_2_nparticles_log
+      - 4
+      - 1.5
+    - - jet_2_tau1_log
+      - -2
+      - 1
+    - - jet_2_tau2_log
+      - -3
+      - 1
+    - - jet_2_tau3_log
+      - -3.5
+      - 1
+    - - jet_2_tau4_log
+      - -4
+      - 1
   label_vars:
     length: null
     vars:
