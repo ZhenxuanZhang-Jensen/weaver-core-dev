@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import os
 import ast
 import sys
@@ -10,7 +9,8 @@ import functools
 import numpy as np
 import math
 import torch
-
+# os.chdir("/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/")
+sys.path.append("/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/")
 from torch.utils.data import DataLoader
 from utils.logger import _logger, _configLogger
 from utils.dataset import SimpleIterDataset
@@ -23,8 +23,8 @@ parser.add_argument('--train-mode', type=str, default='cls',
 parser.add_argument('--train-mode-params', type=str, default='',
                     choices=['', 'metric:loss'],
                     help='training mode parameters')
-parser.add_argument('--run-mode', type=str, default='default',
-                    choices=['default', 'train-only', 'val-only'],
+parser.add_argument('--run-', type=str, default='default',
+                    choices=['modedefault', 'train-only', 'val-only'],
                     help='training mode')
 parser.add_argument('--early-stop', action='store_true', default=False,
                     help='Early stop training if the validation metric does not improve for a few epochs')
@@ -123,7 +123,7 @@ parser.add_argument('--use-amp', action='store_true', default=False,
                     help='use mixed precision training (fp16)')
 parser.add_argument('--compile-model', action='store_true', default=False,
                     help='compile model (supported from PyTorch 2.0)')
-parser.add_argument('--gpus', type=str, default='0',
+parser.add_argument('--gpus', type=str, default='False',
                     help='device for the training/testing; to use CPU, set to empty string (""); to use multiple gpu, set it as a comma separated list, e.g., `1,2,3,4`')
 parser.add_argument('--predict-gpus', type=str, default=None,
                     help='device for the testing; to use CPU, set to empty string (""); to use multiple gpu, set it as a comma separated list, e.g., `1,2,3,4`; if not set, use the same as `--gpus`')
@@ -259,6 +259,7 @@ def train_load(args):
                                  infinity_mode=args.steps_per_epoch_val is not None,
                                  in_memory=args.in_memory,
                                  name='val' + ('' if args.local_rank is None else '_rank%d' % args.local_rank))
+    print("args.num_workers", args.num_workers)
     train_loader = DataLoader(train_data, batch_size=args.batch_size, drop_last=True, pin_memory=True,
                               num_workers=min(args.num_workers, int(len(train_files) * args.file_fraction)),
                               persistent_workers=args.num_workers > 0 and args.steps_per_epoch is not None)
@@ -837,7 +838,7 @@ def _main(args):
     training_mode = not args.predict
 
     # device
-    if args.gpus:
+    if args.gpus != "False":
         # distributed training
         if args.backend is not None:
             local_rank = args.local_rank

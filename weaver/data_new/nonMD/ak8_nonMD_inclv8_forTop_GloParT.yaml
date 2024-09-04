@@ -39,7 +39,7 @@ inputs:
         length: 256
         pad_mode: constant
         vars:
-            - [jet_custom_discs, null]
+            - [jet_pt, jet_eta, jet_phi, null]
     aux_vars:
         length: null
         vars:

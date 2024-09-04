@@ -1,0 +1,175 @@
+treename: null
+selection: "(jet_tightId==1) & (jet_no<2) & (fj_pt>200) & (fj_pt<2500) & (fj_sdmass>=20)\
+  \ & (fj_sdmass<260) & (\n  ( (fj_label >= 309) & (fj_label < 314) & (sample_isQCD==1)\
+  \ & (event_no%7!=0) ) |\n  ( (fj_label <= 45) & (sample_isQCD==0)  & (event_no%7!=0)\
+  \ )\n)"
+test_time_selection: "(jet_tightId==1) & (jet_no<2) & (\n  ((sample_isQCD==1) & (event_no%28==0))\
+  \ |\n  ((sample_isQCD==0) & (event_no%7==0))\n)"
+preprocess:
+  method: manual
+  data_fraction: null
+  params: null
+new_variables:
+  fj_label_modified_QCD: ak.where(fj_label>=309, fj_label-286, fj_label)
+  fj_label_modified_WSL: ak.where(fj_label_modified_QCD>=30, fj_label_modified_QCD-13,
+    fj_label_modified_QCD)
+  fj_label_noH: ak.where(fj_label_modified_WSL>=37, fj_label_modified_WSL-18, fj_label_modified_WSL)
+  fj_pt_log: np.log(fj_pt)
+  fj_sdmass_log: np.log(np.maximum(fj_sdmass, 1e-8))
+  _label_: fj_label_noH
+  _labelcheck_: ak.ones_like(fj_label_noH)
+inputs:
+  ft_vars:
+    length: 256
+    pad_mode: constant
+    vars:
+    - - jet_pt
+      - jet_eta
+      - jet_phi
+      - null
+  aux_vars:
+    length: null
+    vars:
+    - - fj_pt_log
+      - 7.0
+      - 2.0
+    - - fj_sdmass_log
+      - 4.0
+      - 0.5
+labels:
+  type: simple
+  value: null
+  value_cls_index: fj_label_noH
+  value_cls_names:
+  - Top_bWcs
+  - Top_bWqq
+  - Top_bWc
+  - Top_bWs
+  - Top_bWq
+  - Top_bWev
+  - Top_bWmv
+  - Top_bWtauev
+  - Top_bWtaumv
+  - Top_bWtauhv
+  - Top_Wcs
+  - Top_Wqq
+  - Top_Wev
+  - Top_Wmv
+  - Top_Wtauev
+  - Top_Wtaumv
+  - Top_Wtauhv
+  - W_cs
+  - W_qq
+  - Z_bb
+  - Z_cc
+  - Z_ss
+  - Z_qq
+  - QCD_bb
+  - QCD_cc
+  - QCD_b
+  - QCD_c
+  - QCD_others
+observers:
+- event_no
+- fj_label
+- fj_pt
+- fj_eta
+- fj_phi
+- fj_mass
+- fj_sdmass
+- fj_sdmass_fromsubjets
+- fj_gen_mass
+- fj_genparts_mass
+- fj_genjet_sdmass
+- fj_genjet_nomu_sdmass
+- sample_isQCD
+- pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XbbvsQCD
+- pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XccvsQCD
+- pfMassDecorrelatedParticleNetDiscriminatorsJetTags_XqqvsQCD
+- pfMassDecorrelatedParticleNetJetTags_probQCDb
+- pfMassDecorrelatedParticleNetJetTags_probQCDbb
+- pfMassDecorrelatedParticleNetJetTags_probQCDc
+- pfMassDecorrelatedParticleNetJetTags_probQCDcc
+- pfMassDecorrelatedParticleNetJetTags_probQCDothers
+- pfMassDecorrelatedParticleNetJetTags_probXbb
+- pfMassDecorrelatedParticleNetJetTags_probXcc
+- pfMassDecorrelatedParticleNetJetTags_probXqq
+- pfParticleNetDiscriminatorsJetTags_H4qvsQCD
+- pfParticleNetDiscriminatorsJetTags_HbbvsQCD
+- pfParticleNetDiscriminatorsJetTags_HccvsQCD
+- pfParticleNetDiscriminatorsJetTags_TvsQCD
+- pfParticleNetDiscriminatorsJetTags_WvsQCD
+- pfParticleNetDiscriminatorsJetTags_ZbbvsQCD
+- pfParticleNetDiscriminatorsJetTags_ZvsQCD
+- pfParticleNetJetTags_probHbb
+- pfParticleNetJetTags_probHcc
+- pfParticleNetJetTags_probHqqqq
+- pfParticleNetJetTags_probQCDb
+- pfParticleNetJetTags_probQCDbb
+- pfParticleNetJetTags_probQCDc
+- pfParticleNetJetTags_probQCDcc
+- pfParticleNetJetTags_probQCDothers
+- pfParticleNetJetTags_probTbc
+- pfParticleNetJetTags_probTbcq
+- pfParticleNetJetTags_probTbel
+- pfParticleNetJetTags_probTbmu
+- pfParticleNetJetTags_probTbq
+- pfParticleNetJetTags_probTbqq
+- pfParticleNetJetTags_probTbta
+- pfParticleNetJetTags_probWcq
+- pfParticleNetJetTags_probWqq
+- pfParticleNetJetTags_probZbb
+- pfParticleNetJetTags_probZcc
+- pfParticleNetJetTags_probZqq
+monitor_variables: []
+weights:
+  use_precomputed_weights: false
+  reweight_method: flat
+  reweight_vars:
+    fj_pt:
+    - 200
+    - 251
+    - 316
+    - 398
+    - 501
+    - 630
+    - 793
+    - 997
+    - 1255
+    - 1579
+    - 1987
+    - 2500
+    fj_sdmass:
+    - -10000
+    - 10000
+  reweight_classes:
+  - fj_isQCD
+  - fj_isTop
+  class_weights:
+  - 1
+  - 1
+  reweight_hists:
+    fj_isQCD:
+    - - 0.033295370638370514
+    - - 0.033295370638370514
+    - - 0.03163610026240349
+    - - 0.022695032879710197
+    - - 0.01780814491212368
+    - - 0.017654545605182648
+    - - 0.01710391975939274
+    - - 0.02611856907606125
+    - - 0.025271011516451836
+    - - 0.020100289955735207
+    - - 0.021906595677137375
+    fj_isTop:
+    - - 0.8999999761581421
+    - - 0.49030351638793945
+    - - 0.277211993932724
+    - - 0.17590199410915375
+    - - 0.14879034459590912
+    - - 0.16332556307315826
+    - - 0.1745162457227707
+    - - 0.1934049278497696
+    - - 0.2342948615550995
+    - - 0.3687412142753601
+    - - 0.8999999761581421
