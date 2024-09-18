@@ -188,7 +188,7 @@ inputs:
         vars:
             - sv_mask
     jet_features:
-        length: 1
+        length: null
         vars:
             - [fj_pt_log, 7., 2.]
             - [fj_mass_log, 5., 0.8]
@@ -254,7 +254,6 @@ observers:
     - pfParticleNetJetTags_probZbb
     - pfParticleNetJetTags_probZcc
     - pfParticleNetJetTags_probZqq
-
 
 weights:
     ### [option 1] use precomputed weights stored in the input files
