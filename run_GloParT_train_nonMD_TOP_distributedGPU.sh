@@ -1,5 +1,5 @@
-NGPUS=1
-GPU=0
+cd NGPUS=1
+GPU=1
 DIR=/hpcfs/cms/cmsgpu/zhangzhx
 # 一种设置情形
 PREFIX=ak8_finetune_stage2_topVsQCD_manual.aux256-256; network_name=finetune_stage2/mlp; ext_opt='-o ft_layer_params "[(1024,0)]" -o aux_layer_params "[(256,0),(256,0)]"'
@@ -21,7 +21,7 @@ python $DIR/weaver-core-dev/weaver/train.py \
 "qcd:/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/infer/QCD_Pt_170toInf_ptBinned_TuneCP5_13TeV_pythia8/*.root" \
 "ttbar:/cms/user/zhangzhx/nonMD_TOP_ParT_data/GloParT_data/20230504_ak8_UL17_v8/infer/ZprimeToTT_M1200to4500_W12to45_TuneCP2_PSweights/*.root" \
 --samples-per-epoch $((500 * 512 / $NGPUS)) --samples-per-epoch-val $((500 * 512)) \
---data-config ${config} --num-workers 10 \
+--data-config ${config} --num-workers 2 \
 --network-config $DIR/weaver-core-dev/weaver/networks/$network_name.py \
 --model-prefix $DIR/weaver-core-dev/weaver/model/${PREFIX}/net \
 --predict-output $DIR/weaver-core-dev/weaver/predict/$PREFIX/pred.root \

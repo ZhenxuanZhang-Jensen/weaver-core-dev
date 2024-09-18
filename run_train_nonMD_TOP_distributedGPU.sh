@@ -1,9 +1,10 @@
 PREFIX=NonMD_TOP_test_with_gpus
 config=/hpcfs/cms/cmsgpu/zhangzhx/weaver-core-dev/weaver/data_new/nonMD/ak8_nonMD_inclv8_forTop.yaml
 DIR=/hpcfs/cms/cmsgpu/zhangzhx
-NGPUS=3
-CUDA_VISIBLE_DEVICES=0,1,2 torchrun --standalone --nnodes=1 --nproc_per_node=$NGPUS \
+NGPUS=2
+CUDA_VISIBLE_DEVICES=0,1 torchrun --standalone --nnodes=1 --nproc_per_node=$NGPUS \
 $DIR/weaver-core-dev/weaver/train.py \
+--load-epoch 9 \
 --train-mode cls -o three_coll True -o loss_gamma 5 -o fc_params '[(512,0.1)]' -o embed_dims '[64,256,64]' -o pair_embed_dims '[32,32,32]' \
 --use-amp --batch-size 768 --start-lr 2.025e-2 --num-epochs 10 --optimizer ranger --fetch-step 0.008 \
 --backend nccl --data-train \
